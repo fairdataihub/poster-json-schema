@@ -6,12 +6,6 @@
   "type": "object",
   "additionalProperties": true,
   "properties": {
-    "postersscienceIdentifier": {
-      "type": "string",
-      "description": "The unique identifier assigned by posters.science to this poster. This is the primary internal identifier for the system.",
-      "minLength": 1,
-      "examples": ["PS-2025-001234", "posters.science/12345"]
-    },
     "doi": {
       "$comment": "Optional field. This system generates its own in-house unique identifiers via postersscienceIdentifier, but DOI can be provided if available.",
       "type": "string",
@@ -68,14 +62,14 @@
             "type": "string",
             "description": "The alternate identifier of the item.",
             "minLength": 1,
-            "examples": ["E-GEOD-3481"]
+            "examples": ["PS-2025-001234"]
           },
           "alternateIdentifierType": {
             "type": "string",
             "$comment": "Any text value is allowed.",
             "description": "The type of alternate identifier of the item.",
             "minLength": 1,
-            "examples": ["Local accession number"]
+            "examples": ["psID"]
           }
         },
         "required": ["alternateIdentifier", "alternateIdentifierType"],
