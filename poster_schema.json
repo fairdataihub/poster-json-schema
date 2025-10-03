@@ -1,5 +1,5 @@
 {
-  "$id": "https://schema.fairdataihub.org/v0.3/poster_schema.json",
+  "$id": "https://schema.fairdataihub.org/v0.1/poster_schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Posters.Science JSON Schema",
   "description": "JSON Schema for conference poster metadata at posters.science. Based on DataCite but customized for poster-specific metadata. Posters are unstructured, so posterContent captures both structured (AST) and unstructured (title1-5) text extraction. Mandatory (M) properties must be provided; Optional (O) properties provide richer description.",
@@ -1102,6 +1102,7 @@
     "publicationYear",
     "subjects",
     "dates",
+    "language",
     "types",
     "formats",
     "rightsList",
