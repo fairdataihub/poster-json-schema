@@ -1,29 +1,29 @@
 {
-  "$id": "https://schema.fairdataihub.org/v0.2/schema.json",
+  "$id": "https://schema.fairdataihub.org/v0.3/poster_schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "DataCite JSON Schema for Poster Repository",
-  "description": "Extended DataCite JSON Schema for poster and conference content management. This schema is based on DataCite but includes custom fields for poster-specific metadata. Posters are unstructured, so posterContent fields replace traditional title/abstract/methods structure. Mandatory (M) properties must be provided; Recommended (R) properties are optional but strongly recommended for interoperability; Optional (O) properties provide richer description.",
+  "title": "Posters.Science JSON Schema",
+  "description": "JSON Schema for conference poster metadata at posters.science. Based on DataCite but customized for poster-specific metadata. Posters are unstructured, so posterContent captures both structured (AST) and unstructured (title1-5) text extraction. Mandatory (M) properties must be provided; Optional (O) properties provide richer description.",
   "type": "object",
   "additionalProperties": true,
   "properties": {
     "doi": {
-      "$comment": "Optional field. This system generates its own in-house unique identifiers via postersscienceIdentifier, but DOI can be provided if available.",
+      "$comment": "Optional field. The primary identifier is in alternateIdentifiers as type 'psID'.",
       "type": "string",
-      "description": "The Digital Object Identifier of the item.",
+      "description": "The Digital Object Identifier of the poster, if one has been assigned.",
       "minLength": 1,
-      "examples": ["10.5072/envision.54", "10.5281/zenodo.12345678"]
+      "examples": ["10.5072/posters.2025.001234"]
     },
     "prefix": {
       "type": "string",
       "minLength": 1,
-      "description": "The prefix of the Digital Object Identifier of the item.",
-      "examples": ["10.5072", "10.5281"]
+      "description": "The prefix of the Digital Object Identifier.",
+      "examples": ["10.5072"]
     },
     "suffix": {
       "type": "string",
       "minLength": 1,
-      "description": "The suffix of the Digital Object Identifier of the item.",
-      "examples": ["envision.54", "zenodo.12345678"]
+      "description": "The suffix of the Digital Object Identifier.",
+      "examples": ["posters.2025.001234"]
     },
     "identifiers": {
       "type": "array",
@@ -54,41 +54,41 @@
     },
     "alternateIdentifiers": {
       "type": "array",
-      "description": "The alternate identifiers of the item.",
+      "description": "Alternate identifiers for the poster. At least one identifier of type 'psID' (posters.science identifier) must be provided as the primary system identifier.",
       "items": {
         "type": "object",
         "properties": {
           "alternateIdentifier": {
             "type": "string",
-            "description": "The alternate identifier of the item.",
+            "description": "The alternate identifier of the poster.",
             "minLength": 1,
-            "examples": ["PS-2025-001234"]
+            "examples": ["PS-2025-001234", "arXiv:2501.12345", "Local-ID-789"]
           },
           "alternateIdentifierType": {
             "type": "string",
-            "$comment": "Any text value is allowed.",
-            "description": "The type of alternate identifier of the item.",
+            "$comment": "Common types include 'psID' (posters.science identifier - required), 'arXiv', 'Local accession number', etc.",
+            "description": "The type of alternate identifier. Use 'psID' for the posters.science system identifier.",
             "minLength": 1,
-            "examples": ["psID"]
+            "examples": ["psID", "arXiv", "Local accession number", "Institutional ID"]
           }
         },
         "required": ["alternateIdentifier", "alternateIdentifierType"],
         "additionalProperties": false
       },
-      "minItems": 0,
+      "minItems": 1,
       "uniqueItems": true
     },
     "creators": {
       "type": "array",
-      "description": "The main researchers involved in producing the data, in priority order. To supply multiple creators, repeat this property. Format: family, given",
+      "description": "The main researchers/authors of the poster, in priority order. Format: family, given",
       "items": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
-            "description": "The full name of the creator (personal name or organization name). Note that the personal name format should be: family, given. Names in non-roman scripts may be transliterated according to the ALA-LC tables https://www.loc.gov/catdir/cpso/roman.html.",
+            "description": "The full name of the creator (personal name or organization name). Personal name format should be: family, given.",
             "minLength": 1,
-            "examples": ["Garcia, Giselle"]
+            "examples": ["Garcia, Sofia", "Smith, John", "AI Research Laboratory"]
           },
           "nameType": {
             "type": "string",
@@ -212,14 +212,15 @@
     },
     "titles": {
       "type": "array",
-      "description": "The titles of the item.",
+      "description": "The titles of the poster. Include main title and any alternative titles, subtitles, or translations.",
       "items": {
         "type": "object",
         "properties": {
           "title": {
             "type": "string",
-            "description": "The title of the item.",
-            "minLength": 1
+            "description": "The title of the poster.",
+            "minLength": 1,
+            "examples": ["Machine Learning Approaches to Diabetic Retinopathy Detection", "AI-Ready Clinical Datasets for Type 2 Diabetes Research"]
           },
           "titleType": {
             "type": "string",
@@ -242,13 +243,13 @@
     },
     "publisher": {
       "type": "object",
-      "description": "Name of the entity that holds, archives, publishes prints, distributes, releases, issues, or produces the item.",
+      "description": "The entity that hosts, archives, or distributes the poster. For posters.science, this is typically 'California Medical Innovations Institute' or the conference organizer.",
       "properties": {
         "name": {
           "type": "string",
-          "description": "The name of the publisher of the item.",
+          "description": "The name of the publisher.",
           "minLength": 1,
-          "examples": ["FAIRhub", "Envision Portal", "Zenodo", "World Data Center for Climate (WDCC)", "GeoForschungsZentrum Potsdam (GFZ)", "Geological Institute, University of Tokyo", "GitHub"]
+          "examples": ["California Medical Innovations Institute", "posters.science", "IEEE Conference Publications", "ACM Digital Library"]
         },
         "publisherIdentifier": {
           "type": "string",
@@ -314,14 +315,15 @@
     },
     "subjects": {
       "type": "array",
-      "description": "Subject, keyword, classification code, or key phrase describing the resource.",
+      "description": "Keywords, subject terms, or classification codes describing the research topic of the poster.",
       "items": {
         "type": "object",
         "properties": {
           "subject": {
             "type": "string",
-            "description": "Subject, keyword, classification code, or key phrase describing the resource.",
-            "minLength": 1
+            "description": "Subject, keyword, classification code, or key phrase describing the poster content.",
+            "minLength": 1,
+            "examples": ["Machine Learning", "Type 2 Diabetes", "Retinal Imaging", "Clinical Data Standards"]
           },
           "schemeUri": {
             "type": "string",
@@ -362,21 +364,18 @@
     },
     "dates": {
       "type": "array",
-      "description": "Relevant dates for the resource. Formats: YYYY, YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity described in W3CDTF.",
+      "description": "Important dates for the poster, such as when it was created, presented at a conference, or made publicly available.",
       "items": {
         "type": "object",
         "properties": {
           "date": {
             "type": "string",
-            "description": "YYYY, YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity described in W3CDTF22 https://www.w3.org/TR/NOTE-datetime. Use RKMS-ISO860123 https://www.ukoln.ac.uk/metadata/dcmi/collection-RKMS-ISO8601/ standard for depicting date ranges. Years before 0000 must be prefixed with a - sign, e.g., -0054 to indicate 55 BC.",
+            "description": "Date in W3CDTF format: YYYY, YYYY-MM-DD, or YYYY-MM-DDThh:mm:ssTZD. Can also specify date ranges.",
             "examples": [
-              "2004",
-              "2004-03-02",
-              "2004-03-02T00:00:00Z",
-              "2004-03-02T00:00:00.000Z",
-              "2004-03-02/2005-06-02",
-              "-0054",
-              "55 BCE"
+              "2025",
+              "2025-10-15",
+              "2025-10-15T09:00:00Z",
+              "2025-10-15/2025-10-17"
             ],
             "minLength": 1
           },
@@ -450,12 +449,6 @@
       },
       "minItems": 1,
       "uniqueItems": true
-    },
-    "language": {
-      "type": "string",
-      "minLength": 2,
-      "description": "The primary language used in the dataset. Allowed values are taken from IETF BCP 47 https://en.wikipedia.org/wiki/IETF_language_tag, ISO 639-1 https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes language codes",
-      "examples": ["en", "de", "fr", "es"]
     },
     "types": {
       "type": "object",
@@ -615,7 +608,7 @@
     },
     "descriptions": {
       "type": "array",
-      "description": "All additional information that does not fit in any of the other categories. May be used for technical information or detailed information associated with a scientific instrument. Free text - summary or abstract.",
+      "description": "Free text descriptions of the poster content. Typically includes an abstract summarizing the research, methods used, or technical details.",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -623,7 +616,8 @@
           "description": {
             "type": "string",
             "minLength": 1,
-            "description": "A description associated with the dataset"
+            "description": "A description of the poster content.",
+            "examples": ["This poster presents machine learning methods for automated diabetic retinopathy screening using retinal fundus images from 4,000 participants...", "We describe a novel clinical dataset structure (CDS) for organizing multimodal research data in AI-ready formats..."]
           },
           "descriptionType": {
             "type": "string",
@@ -804,7 +798,7 @@
     },
     "fundingReferences": {
       "type": "array",
-      "description": "Information about financial support (funding) for the resource being registered. Repeat this property to record several different funders.",
+      "description": "Information about financial support for the research presented in the poster.",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -814,7 +808,7 @@
             "type": "string",
             "minLength": 1,
             "description": "Name of the funding provider.",
-            "examples": ["National Institutes of Health (NIH)", "Gordon and Betty Moore Foundation"]
+            "examples": ["National Institutes of Health (NIH)", "National Science Foundation", "California Medical Innovations Institute"]
           },
           "funderIdentifier": {
             "type": "string",
@@ -966,37 +960,91 @@
     },
     "posterContent": {
       "type": "object",
-      "description": "Content extracted from the poster. Posters are unstructured, so these title fields replace traditional title/abstract/methods structure. If we cannot find any title, we can save all the text of the poster under a key named 'unidentified'",
+      "description": "Text content extracted from the poster. Includes both structured (AST) and unstructured (contentArray) representations. If structured sections cannot be identified, save all text in contentArray.unidentified.",
       "properties": {
-        "title1": {
-          "type": "string",
-          "minLength": 1,
-          "description": "First title section extracted from poster"
+        "ast": {
+          "type": "object",
+          "description": "Abstract Syntax Tree representation with identified structured sections of the poster.",
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Main title section of the poster"
+            },
+            "introduction": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Introduction or background section"
+            },
+            "methods": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Methods or methodology section"
+            },
+            "results": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Results or findings section"
+            },
+            "discussion": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Discussion section"
+            },
+            "conclusions": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Conclusions or summary section"
+            },
+            "references": {
+              "type": "string",
+              "minLength": 1,
+              "description": "References or bibliography section"
+            },
+            "acknowledgements": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Acknowledgements section"
+            }
+          },
+          "additionalProperties": true
         },
-        "title2": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Second title section extracted from poster"
-        },
-        "title3": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Third title section extracted from poster"
-        },
-        "title4": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Fourth title section extracted from poster"
-        },
-        "title5": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Fifth title section extracted from poster"
-        },
-        "unidentified": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Unidentified text content from poster when structured titles cannot be extracted"
+        "contentArray": {
+          "type": "object",
+          "description": "Unstructured text extraction using sequential title fields. Use when poster structure cannot be reliably identified.",
+          "properties": {
+            "title1": {
+              "type": "string",
+              "minLength": 1,
+              "description": "First title or major section extracted from poster"
+            },
+            "title2": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Second title or major section extracted from poster"
+            },
+            "title3": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Third title or major section extracted from poster"
+            },
+            "title4": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Fourth title or major section extracted from poster"
+            },
+            "title5": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Fifth title or major section extracted from poster"
+            },
+            "unidentified": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Unidentified text content from poster when structured sections cannot be extracted"
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
@@ -1047,15 +1095,13 @@
     }
   },
   "required": [
-    "schemaVersion",
-    "postersscienceIdentifier",
+    "alternateIdentifiers",
     "creators",
     "titles",
     "publisher",
     "publicationYear",
     "subjects",
     "dates",
-    "language",
     "types",
     "formats",
     "rightsList",
