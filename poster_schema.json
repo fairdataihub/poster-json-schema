@@ -6,73 +6,26 @@
   "type": "object",
   "additionalProperties": true,
   "properties": {
-    "doi": {
-      "$comment": "Optional field. The primary identifier is in alternateIdentifiers as type 'psID'.",
-      "type": "string",
-      "description": "The Digital Object Identifier of the poster, if one has been assigned.",
-      "minLength": 1,
-      "examples": ["10.5072/posters.2025.001234"]
-    },
-    "prefix": {
-      "type": "string",
-      "minLength": 1,
-      "description": "The prefix of the Digital Object Identifier.",
-      "examples": ["10.5072"]
-    },
-    "suffix": {
-      "type": "string",
-      "minLength": 1,
-      "description": "The suffix of the Digital Object Identifier.",
-      "examples": ["posters.2025.001234"]
-    },
     "identifiers": {
       "type": "array",
-      "$comment": "The datacite schema requires you to include the doi as its own entry. This array should be empty.",
-      "description": "The identifiers of the item.",
-      "minItems": 0,
+      "description": "Identifiers for the poster. At least one identifier of type 'psID' (posters.science identifier) must be provided as the primary system identifier. May also include DOI if assigned.",
       "items": {
         "type": "object",
         "properties": {
           "identifier": {
             "type": "string",
-            "description": "The identifier of the item.",
+            "description": "The identifier value.",
             "minLength": 1,
-            "examples": ["10.5072/envision.54"]
+            "examples": ["PS-2025-001234", "10.5072/posters.2025.001234", "arXiv:2501.12345", "Local-ID-789"]
           },
           "identifierType": {
             "type": "string",
-            "description": "The type of identifier of the item.",
+            "description": "The type of identifier. Use 'psID' for the posters.science system identifier, 'DOI' for Digital Object Identifiers.",
             "minLength": 1,
-            "enum": ["DOI"]
+            "examples": ["psID", "DOI", "arXiv", "Local accession number", "Institutional ID"]
           }
         },
         "required": ["identifier", "identifierType"],
-        "additionalProperties": false
-      },
-      "maxItems": 0,
-      "uniqueItems": true
-    },
-    "alternateIdentifiers": {
-      "type": "array",
-      "description": "Alternate identifiers for the poster. At least one identifier of type 'psID' (posters.science identifier) must be provided as the primary system identifier.",
-      "items": {
-        "type": "object",
-        "properties": {
-          "alternateIdentifier": {
-            "type": "string",
-            "description": "The alternate identifier of the poster.",
-            "minLength": 1,
-            "examples": ["PS-2025-001234", "arXiv:2501.12345", "Local-ID-789"]
-          },
-          "alternateIdentifierType": {
-            "type": "string",
-            "$comment": "Common types include 'psID' (posters.science identifier - required), 'arXiv', 'Local accession number', etc.",
-            "description": "The type of alternate identifier. Use 'psID' for the posters.science system identifier.",
-            "minLength": 1,
-            "examples": ["psID", "arXiv", "Local accession number", "Institutional ID"]
-          }
-        },
-        "required": ["alternateIdentifier", "alternateIdentifierType"],
         "additionalProperties": false
       },
       "minItems": 1,
@@ -530,12 +483,12 @@
     },
     "sizes": {
       "type": "array",
-      "description": "Size (e.g., bytes, pages, inches, etc.) relevant for the dataset",
+      "description": "Physical dimensions or file size of the poster. Common poster sizes include: 36x48 inches, 48x36 inches, A0 (33.1x46.8 inches), A1, etc. Can also include file size.",
       "items": {
         "type": "string",
         "minLength": 1,
-        "description": "A specific size item",
-        "examples": ["15 pages", "6 MB", "45 minutes"]
+        "description": "A specific dimension or size",
+        "examples": ["36x48 inches portrait", "48x36 inches landscape", "A0 portrait", "90x120 cm", "24 MB PDF"]
       },
       "uniqueItems": true
     },
@@ -665,141 +618,6 @@
         "required": ["descriptionType", "description"]
       },
       "minItems": 1,
-      "uniqueItems": true
-    },
-    "geoLocations": {
-      "type": "array",
-      "description": "Geographic locations associated with the dataset. Repeat this property to indicate several different locations.",
-      "items": {
-        "type": "object",
-        "properties": {
-          "geoLocationPoint": {
-            "type": "object",
-            "description": "A point location in space",
-            "properties": {
-              "pointLongitude": {
-                "type": "string",
-                "description": "Longitudinal dimension of point",
-                "minLength": 1,
-                "examples": ["-122.4194"]
-              },
-              "pointLatitude": {
-                "type": "string",
-                "description": "Latitudinal dimension of point",
-                "minLength": 1,
-                "examples": ["37.7749"]
-              }
-            },
-            "required": ["pointLongitude", "pointLatitude"]
-          },
-          "geoLocationBox": {
-            "type": "object",
-            "description": "A box location in space",
-            "properties": {
-              "westBoundLongitude": {
-                "type": "string",
-                "description": "Western longitudinal dimension of box",
-                "minLength": 1,
-                "examples": ["-122.4194"]
-              },
-              "eastBoundLongitude": {
-                "type": "string",
-                "description": "Eastern longitudinal dimension of box",
-                "minLength": 1,
-                "examples": ["-122.4194"]
-              },
-              "southBoundLatitude": {
-                "type": "string",
-                "description": "Southern latitudinal dimension of box",
-                "minLength": 1,
-                "examples": ["37.7749"]
-              },
-              "northBoundLatitude": {
-                "type": "string",
-                "description": "Northern latitudinal dimension of box",
-                "minLength": 1,
-                "examples": ["37.7749"]
-              }
-            },
-            "required": [
-              "westBoundLongitude",
-              "eastBoundLongitude",
-              "southBoundLatitude",
-              "northBoundLatitude"
-            ]
-          },
-          "geoLocationPlace": {
-            "type": "string",
-            "description": "Description of a geographic location",
-            "minLength": 1,
-            "examples": ["Paris"]
-          },
-          "geoLocationPolygons": {
-            "type": "array",
-            "description": "A polygon location in space",
-            "items": {
-              "type": "object",
-              "properties": {
-                "geoLocationPolygon": {
-                  "type": "object",
-                  "description": "A polygon location in space",
-                  "properties": {
-                    "polygonPoint": {
-                      "type": "array",
-                      "description": "A point in the polygon",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "pointLongitude": {
-                            "type": "string",
-                            "description": "Longitudinal dimension of point",
-                            "minLength": 1,
-                            "examples": ["-122.4194"]
-                          },
-                          "pointLatitude": {
-                            "type": "string",
-                            "description": "Latitudinal dimension of point",
-                            "minLength": 1,
-                            "examples": ["37.7749"]
-                          }
-                        },
-                        "required": ["pointLongitude", "pointLatitude"]
-                      },
-                      "minItems": 4,
-                      "uniqueItems": true
-                    },
-                    "inPolygonPoint": {
-                      "type": "object",
-                      "description": "For any bound area that is larger than half the earth, define a (random) point inside",
-                      "properties": {
-                        "pointLongitude": {
-                          "type": "string",
-                          "description": "Longitudinal dimension of point",
-                          "minLength": 1,
-                          "examples": ["-122.4194"]
-                        },
-                        "pointLatitude": {
-                          "type": "string",
-                          "description": "Latitudinal dimension of point",
-                          "minLength": 1,
-                          "examples": ["37.7749"]
-                        }
-                      },
-                      "required": ["pointLongitude", "pointLatitude"]
-                    }
-                  },
-                  "required": ["polygonPoint", "inPolygonPoint"]
-                }
-              },
-              "required": ["geoLocationPolygon"]
-            },
-            "minItems": 0,
-            "uniqueItems": true
-          }
-        },
-        "required": ["geoLocationPoint"]
-      },
-      "minItems": 0,
       "uniqueItems": true
     },
     "fundingReferences": {
@@ -1107,7 +925,7 @@
     }
   },
   "required": [
-    "alternateIdentifiers",
+    "identifiers",
     "creators",
     "titles",
     "publisher",
