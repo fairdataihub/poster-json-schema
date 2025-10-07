@@ -450,6 +450,12 @@
       "minItems": 1,
       "uniqueItems": true
     },
+    "language": {
+      "type": "string",
+      "minLength": 2,
+      "description": "Primary language of the poster content. ISO 639-1 language codes (e.g., 'en', 'es', 'de', 'fr', 'zh').",
+      "examples": ["en", "es", "zh", "fr", "de", "ja", "pt"]
+    },
     "types": {
       "type": "object",
       "properties": {
@@ -962,6 +968,12 @@
       "type": "object",
       "description": "Text content extracted from the poster. Includes both structured (AST) and unstructured (contentArray) representations. If structured sections cannot be identified, save all text in contentArray.unidentified.",
       "properties": {
+        "language": {
+          "type": "string",
+          "minLength": 2,
+          "description": "Language of the extracted poster text content if different from the primary poster language. Defaults to top-level language if not specified.",
+          "examples": ["en", "es", "zh"]
+        },
         "ast": {
           "type": "object",
           "description": "Abstract Syntax Tree representation with identified structured sections of the poster.",
@@ -971,40 +983,88 @@
               "minLength": 1,
               "description": "Main title section of the poster"
             },
+            "titleLang": {
+              "type": "string",
+              "minLength": 2,
+              "description": "Language of the title section if different from posterContent language",
+              "examples": ["en", "es"]
+            },
             "introduction": {
               "type": "string",
               "minLength": 1,
               "description": "Introduction or background section"
+            },
+            "introductionLang": {
+              "type": "string",
+              "minLength": 2,
+              "description": "Language of the introduction section if different from posterContent language",
+              "examples": ["en", "es"]
             },
             "methods": {
               "type": "string",
               "minLength": 1,
               "description": "Methods or methodology section"
             },
+            "methodsLang": {
+              "type": "string",
+              "minLength": 2,
+              "description": "Language of the methods section if different from posterContent language",
+              "examples": ["en", "es"]
+            },
             "results": {
               "type": "string",
               "minLength": 1,
               "description": "Results or findings section"
+            },
+            "resultsLang": {
+              "type": "string",
+              "minLength": 2,
+              "description": "Language of the results section if different from posterContent language",
+              "examples": ["en", "es"]
             },
             "discussion": {
               "type": "string",
               "minLength": 1,
               "description": "Discussion section"
             },
+            "discussionLang": {
+              "type": "string",
+              "minLength": 2,
+              "description": "Language of the discussion section if different from posterContent language",
+              "examples": ["en", "es"]
+            },
             "conclusions": {
               "type": "string",
               "minLength": 1,
               "description": "Conclusions or summary section"
+            },
+            "conclusionsLang": {
+              "type": "string",
+              "minLength": 2,
+              "description": "Language of the conclusions section if different from posterContent language",
+              "examples": ["en", "es"]
             },
             "references": {
               "type": "string",
               "minLength": 1,
               "description": "References or bibliography section"
             },
+            "referencesLang": {
+              "type": "string",
+              "minLength": 2,
+              "description": "Language of the references section if different from posterContent language",
+              "examples": ["en", "es"]
+            },
             "acknowledgements": {
               "type": "string",
               "minLength": 1,
               "description": "Acknowledgements section"
+            },
+            "acknowledgementsLang": {
+              "type": "string",
+              "minLength": 2,
+              "description": "Language of the acknowledgements section if different from posterContent language",
+              "examples": ["en", "es"]
             }
           },
           "additionalProperties": true
