@@ -699,18 +699,6 @@
       "minItems": 1,
       "uniqueItems": true
     },
-    "acknowledgements": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Free text acknowledgements for individuals, groups, or institutions that contributed to the research or poster but are not listed as creators or funders. Common on research posters.",
-      "examples": ["We thank the study participants for their time and the conference organizing committee for their support."]
-    },
-    "howToAcknowledge": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Specific instructions on how others should cite or acknowledge this poster in their work. More prescriptive than just providing a DOI.",
-      "examples": ["Please cite as: Smith, J. & Doe, A. (2025). Title of Poster. Presented at International Conference on Data Science, San Diego, CA.", "To reference this work, use the posters.science identifier: PS-2025-001234"]
-    },
     "ethicsApprovals": {
       "type": "array",
       "description": "Array of ethics committee approvals, IRB protocols, or other ethics-related certifications for the research presented in this poster.",
@@ -718,7 +706,6 @@
         "type": "string",
         "minLength": 1
       },
-      "minItems": 0,
       "uniqueItems": true,
       "examples": [["IRB Protocol #2024-001"], ["University Ethics Committee approval", "California Medical Innovations Institute IRB #2025-042"]]
     },
@@ -840,88 +827,99 @@
           "additionalProperties": true
         },
         "contentArray": {
-          "type": "object",
-          "description": "Unstructured text extraction using sequential title fields. Use when poster structure cannot be reliably identified.",
-          "properties": {
-            "title1": {
-              "type": "string",
-              "minLength": 1,
-              "description": "First title or major section extracted from poster"
+          "type": "array",
+          "description": "Unstructured text extraction using sequential title fields. Use when poster structure cannot be reliably identified. Each array item represents an extraction attempt or section grouping.",
+          "items": {
+            "type": "object",
+            "description": "A set of extracted title sections from the poster",
+            "properties": {
+              "title1": {
+                "type": "string",
+                "minLength": 1,
+                "description": "First title or major section extracted from poster"
+              },
+              "title2": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Second title or major section extracted from poster"
+              },
+              "title3": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Third title or major section extracted from poster"
+              },
+              "title4": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Fourth title or major section extracted from poster"
+              },
+              "title5": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Fifth title or major section extracted from poster"
+              },
+              "unidentified": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Unidentified text content from poster when structured sections cannot be extracted"
+              }
             },
-            "title2": {
-              "type": "string",
-              "minLength": 1,
-              "description": "Second title or major section extracted from poster"
-            },
-            "title3": {
-              "type": "string",
-              "minLength": 1,
-              "description": "Third title or major section extracted from poster"
-            },
-            "title4": {
-              "type": "string",
-              "minLength": 1,
-              "description": "Fourth title or major section extracted from poster"
-            },
-            "title5": {
-              "type": "string",
-              "minLength": 1,
-              "description": "Fifth title or major section extracted from poster"
-            },
-            "unidentified": {
-              "type": "string",
-              "minLength": 1,
-              "description": "Unidentified text content from poster when structured sections cannot be extracted"
-            }
+            "additionalProperties": false
           },
-          "additionalProperties": false
+          "minItems": 0
         }
       },
       "additionalProperties": false
     },
     "tableCaption": {
-      "type": "object",
-      "description": "Captions for tables in the poster",
-      "properties": {
-        "caption1": {
-          "type": "string",
-          "minLength": 1,
-          "description": "First table caption"
+      "type": "array",
+      "description": "List of captions for tables in the poster. Each item represents captions for a single table.",
+      "items": {
+        "type": "object",
+        "description": "Captions for a single table in the poster",
+        "properties": {
+          "caption1": {
+            "type": "string",
+            "minLength": 1,
+            "description": "First table caption or caption line"
+          },
+          "caption2": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Second table caption or caption line"
+          }
         },
-        "caption2": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Second table caption"
-        }
+        "additionalProperties": true
       },
-      "additionalProperties": true
+      "minItems": 0
     },
     "imageCaption": {
-      "type": "object",
-      "description": "Captions for images in the poster",
-      "properties": {
-        "caption1": {
-          "type": "string",
-          "minLength": 1,
-          "description": "First image caption"
+      "type": "array",
+      "description": "List of captions for images in the poster. Each item represents captions for a single image.",
+      "items": {
+        "type": "object",
+        "description": "Captions for a single image in the poster",
+        "properties": {
+          "caption1": {
+            "type": "string",
+            "minLength": 1,
+            "description": "First image caption or caption line"
+          },
+          "caption2": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Second image caption or caption line"
+          }
         },
-        "caption2": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Second image caption"
-        }
+        "additionalProperties": true
       },
-      "additionalProperties": true
+      "minItems": 0
     },
     "domain": {
       "type": "string",
       "minLength": 1,
-      "description": "Domain or field of study"
-    },
-    "species": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Species information if applicable"
+      "description": "Primary domain or field of study for the research presented in the poster",
+      "examples": ["Machine Learning", "Clinical Medicine", "Bioinformatics", "Public Health", "Neuroscience"]
     }
   },
   "required": [
