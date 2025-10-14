@@ -84,7 +84,6 @@
               "required": ["nameIdentifier"],
               "additionalProperties": false
             },
-            "minItems": 0,
             "uniqueItems": true
           },
           "affiliation": {
@@ -147,13 +146,12 @@
                 "required": ["affiliationIdentifierScheme"]
               }
             },
-            "minItems": 0,
             "uniqueItems": true
           },
-          "lang": {
+          "language": {
             "type": "string",
-            "description": "The language of the name of the creator.",
-            "minLength": 1,
+            "description": "The language of the name of the creator. ISO 639-1 language code.",
+            "minLength": 2,
             "examples": ["en", "fr", "es"]
           }
         },
@@ -181,10 +179,10 @@
             "minLength": 1,
             "enum": ["AlternativeTitle", "Subtitle", "TranslatedTitle", "Other"]
           },
-          "lang": {
+          "language": {
             "type": "string",
-            "description": "The language of the title of the item.",
-            "minLength": 1,
+            "description": "The language of the title of the item. ISO 639-1 language code.",
+            "minLength": 2,
             "examples": ["en", "fr", "es"]
           }
         },
@@ -230,10 +228,10 @@
             "https://re3data.org"
           ]
         },
-        "lang": {
+        "language": {
           "type": "string",
-          "description": "The language of the publisher of the item.",
-          "minLength": 1,
+          "description": "The language of the publisher of the item. ISO 639-1 language code.",
+          "minLength": 2,
           "examples": ["en", "fr", "es"]
         }
       },
@@ -302,10 +300,10 @@
             "minLength": 1,
             "examples": ["310607"]
           },
-          "lang": {
+          "language": {
             "type": "string",
-            "description": "The language of the subject of the item.",
-            "minLength": 1,
+            "description": "The language of the subject of the item. ISO 639-1 language code.",
+            "minLength": 2,
             "examples": ["en", "fr", "es"]
           }
         },
@@ -406,7 +404,7 @@
     "language": {
       "type": "string",
       "minLength": 2,
-      "description": "Primary language of the poster content. ISO 639-1 language codes (e.g., 'en', 'es', 'de', 'fr', 'zh').",
+      "description": "Primary language of the poster content. ISO 639-1 language code (e.g., 'en', 'es', 'de', 'fr', 'zh').",
       "examples": ["en", "es", "zh", "fr", "de", "ja", "pt"]
     },
     "types": {
@@ -478,7 +476,6 @@
         ],
         "additionalProperties": false
       },
-      "minItems": 0,
       "uniqueItems": true
     },
     "sizes": {
@@ -553,10 +550,10 @@
             "description": "The URI of the rightsIdentifierScheme",
             "examples": ["https://spdx.org/licenses/"]
           },
-          "lang": {
+          "language": {
             "type": "string",
-            "minLength": 1,
-            "description": "The language of the rights",
+            "minLength": 2,
+            "description": "The language of the rights. ISO 639-1 language code.",
             "examples": ["en"]
           }
         },
@@ -608,10 +605,10 @@
               }
             ]
           },
-          "lang": {
+          "language": {
             "type": "string",
-            "minLength": 1,
-            "description": "The language of the description",
+            "minLength": 2,
+            "description": "The language of the description. ISO 639-1 language code.",
             "examples": ["en"]
           }
         },
@@ -626,7 +623,6 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "description": "",
         "properties": {
           "funderName": {
             "type": "string",
@@ -776,7 +772,7 @@
         "language": {
           "type": "string",
           "minLength": 2,
-          "description": "Language of the extracted poster text content if different from the primary poster language. Defaults to top-level language if not specified.",
+          "description": "Language of the extracted poster text content if different from the primary poster language. Defaults to top-level language if not specified. ISO 639-1 language code.",
           "examples": ["en", "es", "zh"]
         },
         "ast": {
@@ -865,8 +861,7 @@
               }
             },
             "additionalProperties": false
-          },
-          "minItems": 0
+          }
         }
       },
       "additionalProperties": false
@@ -890,8 +885,7 @@
           }
         },
         "additionalProperties": true
-      },
-      "minItems": 0
+      }
     },
     "imageCaption": {
       "type": "array",
@@ -912,8 +906,7 @@
           }
         },
         "additionalProperties": true
-      },
-      "minItems": 0
+      }
     },
     "domain": {
       "type": "string",
