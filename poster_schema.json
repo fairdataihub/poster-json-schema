@@ -22,7 +22,7 @@
             "type": "string",
             "description": "The type of identifier. Use 'psID' for the posters.science system identifier, 'DOI' for Digital Object Identifiers.",
             "minLength": 1,
-            "examples": ["psID", "DOI", "arXiv", "Local accession number", "Institutional ID"]
+            "examples": ["psID", "DOI", "arXiv", "Local accession number", "Institutional ID", "file"]
           }
         },
         "required": ["identifier", "identifierType"],
@@ -68,7 +68,7 @@
                   "type": "string",
                   "description": "The scheme of the name identifier of the creator.",
                   "minLength": 1,
-                  "examples": ["ORCID", "ISNI", "ROR"]
+                  "examples": ["ORCID", "ISNI", "ROR","contact"]
                 },
                 "schemeURI": {
                   "type": "string",
