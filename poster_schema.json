@@ -767,8 +767,14 @@
     },
     "posterContent": {
       "type": "object",
-      "description": "Text content extracted from the poster organized as structured sections. Each section contains a title and its corresponding content, allowing for flexible section naming (e.g., 'Methods', 'Approach', 'Results', 'Results & Conclusions', etc.).",
+      "description": "Text content extracted from the poster. The posterTitle field captures the main title text as it appears on the poster. Remaining content is organized into sections with flexible naming (e.g., 'Introduction', 'Methods', 'Approach', 'Results & Conclusions', etc.).",
       "properties": {
+        "posterTitle": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The main title text extracted from the poster as it appears on the poster itself. This is the extracted text, which may differ from the metadata title.",
+          "examples": ["Machine Learning Approaches to Diabetic Retinopathy Detection", "Novel Methods for Clinical Data Standardization"]
+        },
         "language": {
           "type": "string",
           "minLength": 2,
@@ -806,6 +812,7 @@
           "minLength": 1
         }
       },
+      "required": ["posterTitle"],
       "additionalProperties": false
     },
     "tableCaption": {
