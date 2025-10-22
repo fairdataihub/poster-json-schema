@@ -801,7 +801,7 @@
                 "examples": ["Machine learning algorithms were applied to analyze retinal images from 4,000 participants..."]
               }
             },
-            "required": ["sectionTitle", "sectionContent"],
+            "required": ["sectionTitle"],
             "additionalProperties": false
           },
           "minItems": 1
