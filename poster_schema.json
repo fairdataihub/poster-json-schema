@@ -1,18 +1,30 @@
 {
-  "$id": "https://schema.fairdataihub.org/v0.2/schema.json",
+  "$id": "https://posters.science/schema/v0.1/poster_schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "DataCite JSON Schema for Poster Repository",
-  "description": "Extended DataCite JSON Schema for poster and conference content management. This schema is based on DataCite but includes custom fields for poster-specific metadata. Posters are unstructured, so posterContent fields replace traditional title/abstract/methods structure. Mandatory (M) properties must be provided; Recommended (R) properties are optional but strongly recommended for interoperability; Optional (O) properties provide richer description.",
+  "title": "Machine Actionable Scientific Poster Schema",
+  "description": "JSON Schema for machine actionable scientific posters. It is based on the DataCite schema v4.5 but extended for poster-specific metadata that were not available in the DataCite schema. Mandatory (M) properties must be provided; Optional (O) properties provide richer description.",
   "type": "object",
   "additionalProperties": true,
   "properties": {
-    "postersscienceIdentifier": {
+      "doi": {
+      "$comment": "Optional field. This system generates its own in-house unique identifiers via postersscienceIdentifier, but DOI can be provided if available.",
       "type": "string",
-      "description": "The unique identifier assigned by posters.science to this poster. This is the primary internal identifier for the system.",
+      "description": "The Digital Object Identifier of the item.",
       "minLength": 1,
-      "examples": ["PS-2025-001234", "posters.science/12345"]
+      "examples": ["10.5072/envision.54", "10.5281/zenodo.12345678"]
     },
-    "doi": {
+    "prefix": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The prefix of the Digital Object Identifier of the item.",
+      "examples": ["10.5072", "10.5281"]
+    },
+    "suffix": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The suffix of the Digital Object Identifier of the item.",
+      "examples": ["envision.54", "zenodo.12345678"]
+    },    "doi": {
       "$comment": "Optional field. This system generates its own in-house unique identifiers via postersscienceIdentifier, but DOI can be provided if available.",
       "type": "string",
       "description": "The Digital Object Identifier of the item.",
@@ -33,29 +45,27 @@
     },
     "identifiers": {
       "type": "array",
-      "$comment": "The datacite schema requires you to include the doi as its own entry. This array should be empty.",
-      "description": "The identifiers of the item.",
-      "minItems": 0,
+      "description": "Identifiers for the poster. May include DOI, institutional IDs, or other persistent identifiers.",
       "items": {
         "type": "object",
         "properties": {
           "identifier": {
             "type": "string",
-            "description": "The identifier of the item.",
+            "description": "The identifier value.",
             "minLength": 1,
-            "examples": ["10.5072/envision.54"]
+            "examples": ["10.5072/posters.2025.001234", "arXiv:2501.12345", "Local-ID-789"]
           },
           "identifierType": {
             "type": "string",
-            "description": "The type of identifier of the item.",
+            "description": "The type of identifier. Use 'DOI' for Digital Object Identifiers, or other standard identifier types.",
             "minLength": 1,
-            "enum": ["DOI"]
+            "examples": ["DOI", "arXiv", "Local accession number", "Institutional ID", "file"]
           }
         },
         "required": ["identifier", "identifierType"],
         "additionalProperties": false
       },
-      "maxItems": 0,
+      "minItems": 1,
       "uniqueItems": true
     },
     "alternateIdentifiers": {
@@ -68,14 +78,14 @@
             "type": "string",
             "description": "The alternate identifier of the item.",
             "minLength": 1,
-            "examples": ["E-GEOD-3481"]
+            "examples": ["PS-2025-001234"]
           },
           "alternateIdentifierType": {
             "type": "string",
             "$comment": "Any text value is allowed.",
             "description": "The type of alternate identifier of the item.",
             "minLength": 1,
-            "examples": ["Local accession number"]
+            "examples": ["psID"]
           }
         },
         "required": ["alternateIdentifier", "alternateIdentifierType"],
@@ -83,18 +93,17 @@
       },
       "minItems": 0,
       "uniqueItems": true
-    },
     "creators": {
       "type": "array",
-      "description": "The main researchers involved in producing the data, in priority order. To supply multiple creators, repeat this property. Format: family, given",
+      "description": "The authors of the poster, in priority order. Format: family, given. The DataCite schema refers to authors as creators so we will use creator in the descriptions below.",
       "items": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
-            "description": "The full name of the creator (personal name or organization name). Note that the personal name format should be: family, given. Names in non-roman scripts may be transliterated according to the ALA-LC tables https://www.loc.gov/catdir/cpso/roman.html.",
+            "description": "The full name of the creator (personal name or organization name). Personal name format should be: family, given.",
             "minLength": 1,
-            "examples": ["Garcia, Giselle"]
+            "examples": ["Garcia, Sofia", "Smith, John", "AI Research Laboratory"]
           },
           "nameType": {
             "type": "string",
@@ -121,7 +130,7 @@
                   "type": "string",
                   "description": "The scheme of the name identifier of the creator.",
                   "minLength": 1,
-                  "examples": ["ORCID", "ISNI", "ROR"]
+                  "examples": ["ORCID", "ISNI", "ROR","contact"]
                 },
                 "schemeURI": {
                   "type": "string",
@@ -137,7 +146,6 @@
               "required": ["nameIdentifier"],
               "additionalProperties": false
             },
-            "minItems": 0,
             "uniqueItems": true
           },
           "affiliation": {
@@ -200,15 +208,8 @@
                 "required": ["affiliationIdentifierScheme"]
               }
             },
-            "minItems": 0,
             "uniqueItems": true
           },
-          "lang": {
-            "type": "string",
-            "description": "The language of the name of the creator.",
-            "minLength": 1,
-            "examples": ["en", "fr", "es"]
-          }
         },
         "required": ["name"],
         "additionalProperties": false
@@ -218,14 +219,15 @@
     },
     "titles": {
       "type": "array",
-      "description": "The titles of the item.",
+      "description": "The titles of the poster. Include main title and any alternative titles, subtitles, or translations.",
       "items": {
         "type": "object",
         "properties": {
           "title": {
             "type": "string",
-            "description": "The title of the item.",
-            "minLength": 1
+            "description": "The title of the poster.",
+            "minLength": 1,
+            "examples": ["Machine Learning Approaches to Diabetic Retinopathy Detection", "AI-Ready Clinical Datasets for Type 2 Diabetes Research"]
           },
           "titleType": {
             "type": "string",
@@ -233,12 +235,6 @@
             "minLength": 1,
             "enum": ["AlternativeTitle", "Subtitle", "TranslatedTitle", "Other"]
           },
-          "lang": {
-            "type": "string",
-            "description": "The language of the title of the item.",
-            "minLength": 1,
-            "examples": ["en", "fr", "es"]
-          }
         },
         "required": ["title"],
         "additionalProperties": false
@@ -248,13 +244,13 @@
     },
     "publisher": {
       "type": "object",
-      "description": "Name of the entity that holds, archives, publishes prints, distributes, releases, issues, or produces the item.",
+      "description": "The entity that hosts, archives, or distributes the poster. This could be a repository (e.g., Zenodo, institutional repository), conference website, or publishing platform where the poster is or will be publicly available.",
       "properties": {
         "name": {
           "type": "string",
-          "description": "The name of the publisher of the item.",
+          "description": "The name of the publisher.",
           "minLength": 1,
-          "examples": ["FAIRhub", "Envision Portal", "Zenodo", "World Data Center for Climate (WDCC)", "GeoForschungsZentrum Potsdam (GFZ)", "Geological Institute, University of Tokyo", "GitHub"]
+          "examples": ["Zenodo", "IEEE Conference Publications", "ACM Digital Library", "Institutional Repository"]
         },
         "publisherIdentifier": {
           "type": "string",
@@ -282,12 +278,6 @@
             "https://re3data.org"
           ]
         },
-        "lang": {
-          "type": "string",
-          "description": "The language of the publisher of the item.",
-          "minLength": 1,
-          "examples": ["en", "fr", "es"]
-        }
       },
       "required": ["name"],
       "additionalProperties": false,
@@ -313,21 +303,22 @@
     },
     "publicationYear": {
       "type": "integer",
-      "description": "The year when the data was or will be made publicly available. Format: YYYY",
+      "description": "The year when the poster was or will be made publicly available. Format: YYYY",
       "minimum": 1000,
       "maximum": 9999,
       "examples": [2025]
     },
     "subjects": {
       "type": "array",
-      "description": "Subject, keyword, classification code, or key phrase describing the resource.",
+      "description": "Keywords, subject terms, or classification codes describing the research topic of the poster.",
       "items": {
         "type": "object",
         "properties": {
           "subject": {
             "type": "string",
-            "description": "Subject, keyword, classification code, or key phrase describing the resource.",
-            "minLength": 1
+            "description": "Subject, keyword, classification code, or key phrase describing the poster content.",
+            "minLength": 1,
+            "examples": ["Machine Learning", "Type 2 Diabetes", "Retinal Imaging", "Clinical Data Standards"]
           },
           "schemeUri": {
             "type": "string",
@@ -353,12 +344,6 @@
             "minLength": 1,
             "examples": ["310607"]
           },
-          "lang": {
-            "type": "string",
-            "description": "The language of the subject of the item.",
-            "minLength": 1,
-            "examples": ["en", "fr", "es"]
-          }
         },
         "required": ["subject"],
         "additionalProperties": false
@@ -368,21 +353,18 @@
     },
     "dates": {
       "type": "array",
-      "description": "Relevant dates for the resource. Formats: YYYY, YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity described in W3CDTF.",
+      "description": "Important dates for the poster, such as when it was created, presented at a conference, or made publicly available.",
       "items": {
         "type": "object",
         "properties": {
           "date": {
             "type": "string",
-            "description": "YYYY, YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity described in W3CDTF22 https://www.w3.org/TR/NOTE-datetime. Use RKMS-ISO860123 https://www.ukoln.ac.uk/metadata/dcmi/collection-RKMS-ISO8601/ standard for depicting date ranges. Years before 0000 must be prefixed with a - sign, e.g., -0054 to indicate 55 BC.",
+            "description": "Date in W3CDTF format: YYYY, YYYY-MM-DD, or YYYY-MM-DDThh:mm:ssTZD. Can also specify date ranges.",
             "examples": [
-              "2004",
-              "2004-03-02",
-              "2004-03-02T00:00:00Z",
-              "2004-03-02T00:00:00.000Z",
-              "2004-03-02/2005-06-02",
-              "-0054",
-              "55 BCE"
+              "2025",
+              "2025-10-15",
+              "2025-10-15T09:00:00Z",
+              "2025-10-15/2025-10-17"
             ],
             "minLength": 1
           },
@@ -460,8 +442,8 @@
     "language": {
       "type": "string",
       "minLength": 2,
-      "description": "The primary language used in the dataset. Allowed values are taken from IETF BCP 47 https://en.wikipedia.org/wiki/IETF_language_tag, ISO 639-1 https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes language codes",
-      "examples": ["en", "de", "fr", "es"]
+      "description": "Primary language of the poster content. ISO 639-1 language code (e.g., 'en', 'es', 'de', 'fr', 'zh').",
+      "examples": ["en", "es", "zh", "fr", "de", "ja", "pt"]
     },
     "types": {
       "type": "object",
@@ -532,17 +514,16 @@
         ],
         "additionalProperties": false
       },
-      "minItems": 0,
       "uniqueItems": true
     },
     "sizes": {
       "type": "array",
-      "description": "Size (e.g., bytes, pages, inches, etc.) relevant for the dataset",
+      "description": "Physical dimensions or file size of the poster. Common poster sizes include: 36x48 inches, 48x36 inches, A0 (33.1x46.8 inches), A1, etc. Can also include file size.",
       "items": {
         "type": "string",
         "minLength": 1,
-        "description": "A specific size item",
-        "examples": ["15 pages", "6 MB", "45 minutes"]
+        "description": "A specific dimension or size",
+        "examples": ["36x48 inches portrait", "48x36 inches landscape", "A0 portrait", "90x120 cm", "24 MB PDF"]
       },
       "uniqueItems": true
     },
@@ -607,12 +588,6 @@
             "description": "The URI of the rightsIdentifierScheme",
             "examples": ["https://spdx.org/licenses/"]
           },
-          "lang": {
-            "type": "string",
-            "minLength": 1,
-            "description": "The language of the rights",
-            "examples": ["en"]
-          }
         },
         "required": ["rights"]
       },
@@ -621,7 +596,7 @@
     },
     "descriptions": {
       "type": "array",
-      "description": "All additional information that does not fit in any of the other categories. May be used for technical information or detailed information associated with a scientific instrument. Free text - summary or abstract.",
+      "description": "Free text descriptions of the poster content. Typically includes an abstract summarizing the research, methods used, or technical details.",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -629,7 +604,8 @@
           "description": {
             "type": "string",
             "minLength": 1,
-            "description": "A description associated with the dataset"
+            "description": "A description of the poster content.",
+            "examples": ["This poster presents machine learning methods for automated diabetic retinopathy screening using retinal fundus images from 4,000 participants...", "We describe a novel clinical dataset structure (CDS) for organizing multimodal research data in AI-ready formats..."]
           },
           "descriptionType": {
             "type": "string",
@@ -661,166 +637,24 @@
               }
             ]
           },
-          "lang": {
-            "type": "string",
-            "minLength": 1,
-            "description": "The language of the description",
-            "examples": ["en"]
-          }
         },
         "required": ["descriptionType", "description"]
       },
       "minItems": 1,
       "uniqueItems": true
     },
-    "geoLocations": {
-      "type": "array",
-      "description": "Geographic locations associated with the dataset. Repeat this property to indicate several different locations.",
-      "items": {
-        "type": "object",
-        "properties": {
-          "geoLocationPoint": {
-            "type": "object",
-            "description": "A point location in space",
-            "properties": {
-              "pointLongitude": {
-                "type": "string",
-                "description": "Longitudinal dimension of point",
-                "minLength": 1,
-                "examples": ["-122.4194"]
-              },
-              "pointLatitude": {
-                "type": "string",
-                "description": "Latitudinal dimension of point",
-                "minLength": 1,
-                "examples": ["37.7749"]
-              }
-            },
-            "required": ["pointLongitude", "pointLatitude"]
-          },
-          "geoLocationBox": {
-            "type": "object",
-            "description": "A box location in space",
-            "properties": {
-              "westBoundLongitude": {
-                "type": "string",
-                "description": "Western longitudinal dimension of box",
-                "minLength": 1,
-                "examples": ["-122.4194"]
-              },
-              "eastBoundLongitude": {
-                "type": "string",
-                "description": "Eastern longitudinal dimension of box",
-                "minLength": 1,
-                "examples": ["-122.4194"]
-              },
-              "southBoundLatitude": {
-                "type": "string",
-                "description": "Southern latitudinal dimension of box",
-                "minLength": 1,
-                "examples": ["37.7749"]
-              },
-              "northBoundLatitude": {
-                "type": "string",
-                "description": "Northern latitudinal dimension of box",
-                "minLength": 1,
-                "examples": ["37.7749"]
-              }
-            },
-            "required": [
-              "westBoundLongitude",
-              "eastBoundLongitude",
-              "southBoundLatitude",
-              "northBoundLatitude"
-            ]
-          },
-          "geoLocationPlace": {
-            "type": "string",
-            "description": "Description of a geographic location",
-            "minLength": 1,
-            "examples": ["Paris"]
-          },
-          "geoLocationPolygons": {
-            "type": "array",
-            "description": "A polygon location in space",
-            "items": {
-              "type": "object",
-              "properties": {
-                "geoLocationPolygon": {
-                  "type": "object",
-                  "description": "A polygon location in space",
-                  "properties": {
-                    "polygonPoint": {
-                      "type": "array",
-                      "description": "A point in the polygon",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "pointLongitude": {
-                            "type": "string",
-                            "description": "Longitudinal dimension of point",
-                            "minLength": 1,
-                            "examples": ["-122.4194"]
-                          },
-                          "pointLatitude": {
-                            "type": "string",
-                            "description": "Latitudinal dimension of point",
-                            "minLength": 1,
-                            "examples": ["37.7749"]
-                          }
-                        },
-                        "required": ["pointLongitude", "pointLatitude"]
-                      },
-                      "minItems": 4,
-                      "uniqueItems": true
-                    },
-                    "inPolygonPoint": {
-                      "type": "object",
-                      "description": "For any bound area that is larger than half the earth, define a (random) point inside",
-                      "properties": {
-                        "pointLongitude": {
-                          "type": "string",
-                          "description": "Longitudinal dimension of point",
-                          "minLength": 1,
-                          "examples": ["-122.4194"]
-                        },
-                        "pointLatitude": {
-                          "type": "string",
-                          "description": "Latitudinal dimension of point",
-                          "minLength": 1,
-                          "examples": ["37.7749"]
-                        }
-                      },
-                      "required": ["pointLongitude", "pointLatitude"]
-                    }
-                  },
-                  "required": ["polygonPoint", "inPolygonPoint"]
-                }
-              },
-              "required": ["geoLocationPolygon"]
-            },
-            "minItems": 0,
-            "uniqueItems": true
-          }
-        },
-        "required": ["geoLocationPoint"]
-      },
-      "minItems": 0,
-      "uniqueItems": true
-    },
     "fundingReferences": {
       "type": "array",
-      "description": "Information about financial support (funding) for the resource being registered. Repeat this property to record several different funders.",
+      "description": "Information about financial support for the research presented in the poster.",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "description": "",
         "properties": {
           "funderName": {
             "type": "string",
             "minLength": 1,
             "description": "Name of the funding provider.",
-            "examples": ["National Institutes of Health (NIH)", "Gordon and Betty Moore Foundation"]
+            "examples": ["National Institutes of Health (NIH)", "National Science Foundation", "European Research Council"]
           },
           "funderIdentifier": {
             "type": "string",
@@ -887,18 +721,6 @@
       "minItems": 1,
       "uniqueItems": true
     },
-    "acknowledgements": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Free text acknowledgements for individuals, groups, or institutions that contributed to the research or poster but are not listed as creators or funders. Common on research posters.",
-      "examples": ["We thank the study participants for their time and the conference organizing committee for their support."]
-    },
-    "howToAcknowledge": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Specific instructions on how others should cite or acknowledge this poster in their work. More prescriptive than just providing a DOI.",
-      "examples": ["Please cite as: Smith, J. & Doe, A. (2025). Title of Poster. Presented at International Conference on Data Science, San Diego, CA.", "To reference this work, use the posters.science identifier: PS-2025-001234"]
-    },
     "ethicsApprovals": {
       "type": "array",
       "description": "Array of ethics committee approvals, IRB protocols, or other ethics-related certifications for the research presented in this poster.",
@@ -906,9 +728,8 @@
         "type": "string",
         "minLength": 1
       },
-      "minItems": 0,
       "uniqueItems": true,
-      "examples": [["IRB Protocol #2024-001"], ["University Ethics Committee approval", "California Medical Innovations Institute IRB #2025-042"]]
+      "examples": [["IRB Protocol #2024-001"], ["University Ethics Committee approval", "National Research Ethics Committee approval #2025-042"]]
     },
     "conference": {
       "type": "object",
@@ -972,89 +793,99 @@
     },
     "posterContent": {
       "type": "object",
-      "description": "Content extracted from the poster. Posters are unstructured, so these title fields replace traditional title/abstract/methods structure. If we cannot find any title, we can save all the text of the poster under a key named 'unidentified'",
+      "description": "Text content extracted from the poster. The posterTitle field captures the main title text as it appears on the poster. Remaining content is organized into sections with flexible naming (e.g., 'Introduction', 'Methods', 'Approach', 'Results & Conclusions', etc.).",
       "properties": {
-        "title1": {
+        "posterTitle": {
           "type": "string",
           "minLength": 1,
-          "description": "First title section extracted from poster"
+          "description": "The main title text extracted from the poster as it appears on the poster itself. This is the extracted text, which may differ from the metadata title.",
+          "examples": ["Machine Learning Approaches to Diabetic Retinopathy Detection", "Novel Methods for Clinical Data Standardization"]
         },
-        "title2": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Second title section extracted from poster"
+        "sections": {
+          "type": "array",
+          "description": "Array of content sections extracted from the poster. Each section represents a distinct part of the poster with its title and content.",
+          "items": {
+            "type": "object",
+            "description": "A single section of the poster with its title and content",
+            "properties": {
+              "sectionTitle": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The title or heading of this section as it appears on the poster. Examples: 'Introduction', 'Background', 'Methods', 'Approach', 'Results', 'Results & Conclusions', 'Discussion', 'Future Work', 'Acknowledgements', 'References', etc.",
+                "examples": ["Introduction", "Methods", "Results & Discussion", "Conclusions", "References"]
+              },
+              "sectionContent": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The text content of this section extracted from the poster.",
+                "examples": ["Machine learning algorithms were applied to analyze retinal images from 4,000 participants..."]
+              }
+            },
+            "required": ["sectionTitle"],
+            "additionalProperties": false
+          },
+          "minItems": 1
         },
-        "title3": {
+        "unstructuredContent": {
           "type": "string",
-          "minLength": 1,
-          "description": "Third title section extracted from poster"
-        },
-        "title4": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Fourth title section extracted from poster"
-        },
-        "title5": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Fifth title section extracted from poster"
-        },
-        "unidentified": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Unidentified text content from poster when structured titles cannot be extracted"
+          "description": "Optional field for poster content that cannot be organized into clear sections. Use this when the poster layout is highly unstructured or when section boundaries cannot be reliably identified.",
+          "minLength": 1
         }
       },
+      "required": ["posterTitle"],
       "additionalProperties": false
     },
     "tableCaption": {
-      "type": "object",
-      "description": "Captions for tables in the poster",
-      "properties": {
-        "caption1": {
-          "type": "string",
-          "minLength": 1,
-          "description": "First table caption"
+      "type": "array",
+      "description": "List of captions for tables in the poster. Each item represents captions for a single table.",
+      "items": {
+        "type": "object",
+        "description": "Captions for a single table in the poster",
+        "properties": {
+          "caption1": {
+            "type": "string",
+            "minLength": 1,
+            "description": "First table caption or caption line"
+          },
+          "caption2": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Second table caption or caption line"
+          }
         },
-        "caption2": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Second table caption"
-        }
-      },
-      "additionalProperties": true
+        "additionalProperties": true
+      }
     },
     "imageCaption": {
-      "type": "object",
-      "description": "Captions for images in the poster",
-      "properties": {
-        "caption1": {
-          "type": "string",
-          "minLength": 1,
-          "description": "First image caption"
+      "type": "array",
+      "description": "List of captions for images in the poster. Each item represents captions for a single image.",
+      "items": {
+        "type": "object",
+        "description": "Captions for a single image in the poster",
+        "properties": {
+          "caption1": {
+            "type": "string",
+            "minLength": 1,
+            "description": "First image caption or caption line"
+          },
+          "caption2": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Second image caption or caption line"
+          }
         },
-        "caption2": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Second image caption"
-        }
-      },
-      "additionalProperties": true
+        "additionalProperties": true
+      }
     },
     "domain": {
       "type": "string",
       "minLength": 1,
-      "description": "Domain or field of study"
-    },
-    "species": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Species information if applicable"
+      "description": "Primary domain or field of study for the research presented in the poster",
+      "examples": ["Machine Learning", "Clinical Medicine", "Bioinformatics", "Public Health", "Neuroscience"]
     }
   },
   "required": [
-    "schemaVersion",
-    "postersscienceIdentifier",
+    "identifiers",
     "creators",
     "titles",
     "publisher",
