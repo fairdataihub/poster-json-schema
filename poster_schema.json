@@ -6,6 +6,43 @@
   "type": "object",
   "additionalProperties": true,
   "properties": {
+      "doi": {
+      "$comment": "Optional field. This system generates its own in-house unique identifiers via postersscienceIdentifier, but DOI can be provided if available.",
+      "type": "string",
+      "description": "The Digital Object Identifier of the item.",
+      "minLength": 1,
+      "examples": ["10.5072/envision.54", "10.5281/zenodo.12345678"]
+    },
+    "prefix": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The prefix of the Digital Object Identifier of the item.",
+      "examples": ["10.5072", "10.5281"]
+    },
+    "suffix": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The suffix of the Digital Object Identifier of the item.",
+      "examples": ["envision.54", "zenodo.12345678"]
+    },    "doi": {
+      "$comment": "Optional field. This system generates its own in-house unique identifiers via postersscienceIdentifier, but DOI can be provided if available.",
+      "type": "string",
+      "description": "The Digital Object Identifier of the item.",
+      "minLength": 1,
+      "examples": ["10.5072/envision.54", "10.5281/zenodo.12345678"]
+    },
+    "prefix": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The prefix of the Digital Object Identifier of the item.",
+      "examples": ["10.5072", "10.5281"]
+    },
+    "suffix": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The suffix of the Digital Object Identifier of the item.",
+      "examples": ["envision.54", "zenodo.12345678"]
+    },
     "identifiers": {
       "type": "array",
       "description": "Identifiers for the poster. May include DOI, institutional IDs, or other persistent identifiers.",
@@ -31,6 +68,31 @@
       "minItems": 1,
       "uniqueItems": true
     },
+    "alternateIdentifiers": {
+      "type": "array",
+      "description": "The alternate identifiers of the item.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "alternateIdentifier": {
+            "type": "string",
+            "description": "The alternate identifier of the item.",
+            "minLength": 1,
+            "examples": ["PS-2025-001234"]
+          },
+          "alternateIdentifierType": {
+            "type": "string",
+            "$comment": "Any text value is allowed.",
+            "description": "The type of alternate identifier of the item.",
+            "minLength": 1,
+            "examples": ["psID"]
+          }
+        },
+        "required": ["alternateIdentifier", "alternateIdentifierType"],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "uniqueItems": true
     "creators": {
       "type": "array",
       "description": "The authors of the poster, in priority order. Format: family, given. The DataCite schema refers to authors as creators so we will use creator in the descriptions below.",
@@ -148,12 +210,6 @@
             },
             "uniqueItems": true
           },
-          "language": {
-            "type": "string",
-            "description": "The language of the name of the creator. ISO 639-1 language code.",
-            "minLength": 2,
-            "examples": ["en", "fr", "es"]
-          }
         },
         "required": ["name"],
         "additionalProperties": false
@@ -179,12 +235,6 @@
             "minLength": 1,
             "enum": ["AlternativeTitle", "Subtitle", "TranslatedTitle", "Other"]
           },
-          "language": {
-            "type": "string",
-            "description": "The language of the title of the item. ISO 639-1 language code.",
-            "minLength": 2,
-            "examples": ["en", "fr", "es"]
-          }
         },
         "required": ["title"],
         "additionalProperties": false
@@ -228,12 +278,6 @@
             "https://re3data.org"
           ]
         },
-        "language": {
-          "type": "string",
-          "description": "The language of the publisher of the item. ISO 639-1 language code.",
-          "minLength": 2,
-          "examples": ["en", "fr", "es"]
-        }
       },
       "required": ["name"],
       "additionalProperties": false,
@@ -300,12 +344,6 @@
             "minLength": 1,
             "examples": ["310607"]
           },
-          "language": {
-            "type": "string",
-            "description": "The language of the subject of the item. ISO 639-1 language code.",
-            "minLength": 2,
-            "examples": ["en", "fr", "es"]
-          }
         },
         "required": ["subject"],
         "additionalProperties": false
@@ -550,12 +588,6 @@
             "description": "The URI of the rightsIdentifierScheme",
             "examples": ["https://spdx.org/licenses/"]
           },
-          "language": {
-            "type": "string",
-            "minLength": 2,
-            "description": "The language of the rights. ISO 639-1 language code.",
-            "examples": ["en"]
-          }
         },
         "required": ["rights"]
       },
@@ -605,12 +637,6 @@
               }
             ]
           },
-          "language": {
-            "type": "string",
-            "minLength": 2,
-            "description": "The language of the description. ISO 639-1 language code.",
-            "examples": ["en"]
-          }
         },
         "required": ["descriptionType", "description"]
       },
@@ -774,12 +800,6 @@
           "minLength": 1,
           "description": "The main title text extracted from the poster as it appears on the poster itself. This is the extracted text, which may differ from the metadata title.",
           "examples": ["Machine Learning Approaches to Diabetic Retinopathy Detection", "Novel Methods for Clinical Data Standardization"]
-        },
-        "language": {
-          "type": "string",
-          "minLength": 2,
-          "description": "Language of the extracted poster text content if different from the primary poster language. Defaults to top-level language if not specified. ISO 639-1 language code.",
-          "examples": ["en", "es", "zh"]
         },
         "sections": {
           "type": "array",
