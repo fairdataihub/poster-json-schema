@@ -2,29 +2,11 @@
   "$id": "https://posters.science/schema/v0.1/poster_schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Machine Actionable Scientific Poster Schema",
-  "description": "JSON Schema for machine actionable scientific posters. It is based on the DataCite schema v4.5 but extended for poster-specific metadata that were not available in the DataCite schema. Mandatory (M) properties must be provided; Optional (O) properties provide richer description.",
+  "description": "JSON Schema for machine actionable scientific posters. It is based on the DataCite schema v4.6 but extended for poster-specific metadata that were not available in the DataCite schema. Mandatory (M) properties must be provided; Optional (O) properties provide richer description.",
   "type": "object",
   "additionalProperties": true,
   "properties": {
-      "doi": {
-      "$comment": "Optional field. This system generates its own in-house unique identifiers via postersscienceIdentifier, but DOI can be provided if available.",
-      "type": "string",
-      "description": "The Digital Object Identifier of the item.",
-      "minLength": 1,
-      "examples": ["10.5072/envision.54", "10.5281/zenodo.12345678"]
-    },
-    "prefix": {
-      "type": "string",
-      "minLength": 1,
-      "description": "The prefix of the Digital Object Identifier of the item.",
-      "examples": ["10.5072", "10.5281"]
-    },
-    "suffix": {
-      "type": "string",
-      "minLength": 1,
-      "description": "The suffix of the Digital Object Identifier of the item.",
-      "examples": ["envision.54", "zenodo.12345678"]
-    },    "doi": {
+    "doi": {
       "$comment": "Optional field. This system generates its own in-house unique identifiers via postersscienceIdentifier, but DOI can be provided if available.",
       "type": "string",
       "description": "The Digital Object Identifier of the item.",
@@ -93,6 +75,7 @@
       },
       "minItems": 0,
       "uniqueItems": true
+    },
     "creators": {
       "type": "array",
       "description": "The authors of the poster, in priority order. Format: family, given. The DataCite schema refers to authors as creators so we will use creator in the descriptions below.",
@@ -130,7 +113,7 @@
                   "type": "string",
                   "description": "The scheme of the name identifier of the creator.",
                   "minLength": 1,
-                  "examples": ["ORCID", "ISNI", "ROR","contact"]
+                  "examples": ["ORCID", "ISNI", "ROR", "contact"]
                 },
                 "schemeURI": {
                   "type": "string",
@@ -209,7 +192,7 @@
               }
             },
             "uniqueItems": true
-          },
+          }
         },
         "required": ["name"],
         "additionalProperties": false
@@ -234,7 +217,7 @@
             "description": "The type of title of the item. The titleType subproperty is used when more than a single title is provided. Unless otherwise indicated by titleType, a title is considered to be the main title.",
             "minLength": 1,
             "enum": ["AlternativeTitle", "Subtitle", "TranslatedTitle", "Other"]
-          },
+          }
         },
         "required": ["title"],
         "additionalProperties": false
@@ -277,7 +260,7 @@
             "https://isni.org",
             "https://re3data.org"
           ]
-        },
+        }
       },
       "required": ["name"],
       "additionalProperties": false,
@@ -343,7 +326,7 @@
             "description": "The classification code of the subject of the item. The classificationCode sub-property may be used for subject schemes, like ANZSRC, which do not have valueURIs for each subject term.",
             "minLength": 1,
             "examples": ["310607"]
-          },
+          }
         },
         "required": ["subject"],
         "additionalProperties": false
@@ -587,7 +570,7 @@
             "minLength": 1,
             "description": "The URI of the rightsIdentifierScheme",
             "examples": ["https://spdx.org/licenses/"]
-          },
+          }
         },
         "required": ["rights"]
       },
@@ -636,7 +619,7 @@
                 "description": "Other description information that does not fit into an existing category."
               }
             ]
-          },
+          }
         },
         "required": ["descriptionType", "description"]
       },
@@ -788,19 +771,12 @@
           "description": "Conference series information"
         }
       },
-      "required": ["conferenceName", "conferenceStartDate", "conferenceEndDate"],
       "additionalProperties": false
     },
     "posterContent": {
       "type": "object",
-      "description": "Text content extracted from the poster. The posterTitle field captures the main title text as it appears on the poster. Remaining content is organized into sections with flexible naming (e.g., 'Introduction', 'Methods', 'Approach', 'Results & Conclusions', etc.).",
+      "description": "Text content extracted from the poster. The poster's title is stored under separate DataCite schema titles field. Remaining content is organized into sections here with flexible naming (e.g., 'Introduction', 'Methods', 'Approach', 'Results & Conclusions', etc.).",
       "properties": {
-        "posterTitle": {
-          "type": "string",
-          "minLength": 1,
-          "description": "The main title text extracted from the poster as it appears on the poster itself. This is the extracted text, which may differ from the metadata title.",
-          "examples": ["Machine Learning Approaches to Diabetic Retinopathy Detection", "Novel Methods for Clinical Data Standardization"]
-        },
         "sections": {
           "type": "array",
           "description": "Array of content sections extracted from the poster. Each section represents a distinct part of the poster with its title and content.",
@@ -821,7 +797,6 @@
                 "examples": ["Machine learning algorithms were applied to analyze retinal images from 4,000 participants..."]
               }
             },
-            "required": ["sectionTitle"],
             "additionalProperties": false
           },
           "minItems": 1
@@ -832,7 +807,6 @@
           "minLength": 1
         }
       },
-      "required": ["posterTitle"],
       "additionalProperties": false
     },
     "tableCaption": {
@@ -898,8 +872,7 @@
     "rightsList",
     "descriptions",
     "fundingReferences",
-    "conference",
-    "posterContent"
+    "conference"
   ],
   "definitions": {
     "resourceType": {
