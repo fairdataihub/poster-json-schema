@@ -35,22 +35,37 @@ This example shows how a poster PDF is transformed into machine-actionable metad
 
 ## Extraction Method
 
-The Posters.science platform uses AI-powered processing to automatically extract metadata from scientific posters. The system processes poster uploads through a multi-stage pipeline:
+The Posters.science platform uses a two-stage AI pipeline to convert poster PDFs and images into structured JSON:
 
-1. **OCR Processing** — Text extraction from poster PDFs using optical character recognition
-2. **Structure Recognition** — Identification of sections, figures, tables, and layout elements
-3. **Entity Extraction** — Recognition of authors, institutions, dates, and keywords using a large language model
-4. **Metadata Enrichment** — Validation and linking against external databases (ORCID, ROR, Crossref)
-5. **Schema Generation** — Output of structured JSON conforming to this schema
+### Stage 1: Text Extraction
 
-The extraction tool uses **Llama 3.3 70B** with 4-bit quantization for structured information extraction. Key capabilities include:
+The system automatically selects the extraction method based on file type:
 
-- Handling irregular poster layouts and multi-column designs
-- Understanding scientific terminology across disciplines
-- Robustness to OCR artifacts and typos
-- Extracting implicit information from context
+| Input Format | Extraction Tool | Description |
+|--------------|-----------------|-------------|
+| **PDF** | pdfalto | Converts PDF to ALTO XML preserving layout structure and reading order |
+| **Images** (JPG/PNG) | Qwen2-VL-7B | Vision-language model for direct pixel-to-text extraction |
 
-Each extracted field receives a confidence score. Fields below the confidence threshold are flagged for user review during submission.
+### Stage 2: JSON Structuring
+
+Raw text is converted to structured JSON using **Llama 3.1 8B Instruct** (Q8 quantized) served via Ollama:
+
+- Section-aware extraction identifying: Abstract, Introduction, Methods, Results, Discussion, Conclusions, References
+- Verbatim text preservation to maintain scientific accuracy
+- Adaptive token allocation with fallback for long documents
+
+### Validation Performance
+
+The pipeline achieves **100% compliance** on validation metrics (≥0.75 threshold) across 10 reference posters:
+
+| Metric | Score | Description |
+|--------|-------|-------------|
+| Word Capture | 0.963 | Lexical completeness |
+| ROUGE-L | 0.887 | Sequential text preservation |
+| Number Capture | 0.936 | Quantitative data integrity |
+| Field Proportion | 1.105 | Structural completeness |
+
+For implementation details, see the [poster extraction pipeline](https://github.com/fairdataihub/posters-science-posterextraction-beta).
 
 ## Schema Structure
 
