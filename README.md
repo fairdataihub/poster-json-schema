@@ -10,6 +10,28 @@ Scientific posters are a primary means of scholarly communication at conferences
 - **DOI registration** compatibility via DataCite
 - **FAIR compliance** for poster artifacts
 - **AI-ready** structured data for automated processing
+  
+## Real-World Example
+
+To demonstrate the schema in practice, we provide a complete extraction example from a real poster archived on Zenodo:
+
+### Source Poster
+
+| Field | Value |
+|-------|-------|
+| **Title** | Presenting the Actionable Guidelines for FAIR Research Software Task Force |
+| **DOI** | [10.5281/zenodo.17268692](https://zenodo.org/records/17268692) |
+| **Conference** | US Research Software Engineering Conference 2025 (USRSE'25) |
+| **Authors** | Bhavesh Patel, Daniel Garijo, Actionable FAIR4RS Task Force |
+
+### Extracted JSON
+
+The JSON extraction for this poster is available in our examples repository:
+
+- **JSON files**: [fairdataihub/posters-science-json-examples/17268692](https://github.com/fairdataihub/posters-science-json-examples/tree/main/17268692)
+- **Poster GitHub repo**: [fairdataihub/actionableFAIR4RS-USRSE-2025](https://github.com/fairdataihub/actionableFAIR4RS-USRSE-2025)
+
+This example shows how a poster PDF is transformed into machine-actionable metadata following the schema, including creator information with ORCIDs, conference metadata, and structured poster content sections.
 
 ## Schema Structure
 
@@ -75,28 +97,6 @@ The schema extends DataCite's mandatory and recommended properties with poster-s
 - **Single-page/single-slide** documents only for multi-page formats
 - Multi-page documents are flagged for review
 - Recommended export order: PDF → SVG → PNG
-
-## Real-World Example
-
-To demonstrate the schema in practice, we provide a complete extraction example from a real poster archived on Zenodo:
-
-### Source Poster
-
-| Field | Value |
-|-------|-------|
-| **Title** | Presenting the Actionable Guidelines for FAIR Research Software Task Force |
-| **DOI** | [10.5281/zenodo.17268692](https://zenodo.org/records/17268692) |
-| **Conference** | US Research Software Engineering Conference 2025 (USRSE'25) |
-| **Authors** | Bhavesh Patel, Daniel Garijo, Actionable FAIR4RS Task Force |
-
-### Extracted JSON
-
-The JSON extraction for this poster is available in our examples repository:
-
-- **JSON files**: [fairdataihub/posters-science-json-examples/17268692](https://github.com/fairdataihub/posters-science-json-examples/tree/main/17268692)
-- **Poster GitHub repo**: [fairdataihub/actionableFAIR4RS-USRSE-2025](https://github.com/fairdataihub/actionableFAIR4RS-USRSE-2025)
-
-This example shows how a poster PDF is transformed into machine-actionable metadata following the schema, including creator information with ORCIDs, conference metadata, and structured poster content sections.
 
 ## Example JSON Structure
 
