@@ -76,7 +76,29 @@ The schema extends DataCite's mandatory and recommended properties with poster-s
 - Multi-page documents are flagged for review
 - Recommended export order: PDF → SVG → PNG
 
-## Example
+## Real-World Example
+
+To demonstrate the schema in practice, we provide a complete extraction example from a real poster archived on Zenodo:
+
+### Source Poster
+
+| Field | Value |
+|-------|-------|
+| **Title** | Presenting the Actionable Guidelines for FAIR Research Software Task Force |
+| **DOI** | [10.5281/zenodo.17268692](https://zenodo.org/records/17268692) |
+| **Conference** | US Research Software Engineering Conference 2025 (USRSE'25) |
+| **Authors** | Bhavesh Patel, Daniel Garijo, Actionable FAIR4RS Task Force |
+
+### Extracted JSON
+
+The JSON extraction for this poster is available in our examples repository:
+
+- **JSON files**: [fairdataihub/posters-science-json-examples/17268692](https://github.com/fairdataihub/posters-science-json-examples/tree/main/17268692)
+- **Poster GitHub repo**: [fairdataihub/actionableFAIR4RS-USRSE-2025](https://github.com/fairdataihub/actionableFAIR4RS-USRSE-2025)
+
+This example shows how a poster PDF is transformed into machine-actionable metadata following the schema, including creator information with ORCIDs, conference metadata, and structured poster content sections.
+
+## Example JSON Structure
 
 ```json
 {
@@ -136,9 +158,9 @@ The schema extends DataCite's mandatory and recommended properties with poster-s
 }
 ```
 
-## Manual Annotation Ground Truth
+## Ground Truth Examples
 
-The [`manual_poster_annotation/`](../manual_poster_annotation/) directory contains manually annotated posters serving as ground truth for AI extraction validation. Each annotation includes:
+The [fairdataihub/posters-science-json-examples](https://github.com/fairdataihub/posters-science-json-examples) repository contains manually annotated posters serving as ground truth for AI extraction. Each annotation includes:
 
 | File | Description |
 |------|-------------|
@@ -146,27 +168,6 @@ The [`manual_poster_annotation/`](../manual_poster_annotation/) directory contai
 | `{id}_raw.md` | Extracted text in structured markdown |
 | `{id}.json` | Full metadata JSON (complete schema) |
 | `{id}_sub-json.json` | Poster content subset (AI-ready) |
-
-See the [manual annotation README](../manual_poster_annotation/README.md) for details.
-
-## Validation
-
-```bash
-# Using ajv-cli
-npm install -g ajv-cli
-ajv validate -s poster_schema.json -d example.json
-
-# Using Python jsonschema
-pip install jsonschema
-python -c "
-import json
-from jsonschema import validate
-schema = json.load(open('poster_schema.json'))
-instance = json.load(open('example.json'))
-validate(instance, schema)
-print('Valid!')
-"
-```
 
 ## Related Standards
 
