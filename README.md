@@ -1,2 +1,184 @@
 # posters-science-json-schema
-posters.science .json schema derived but not completely compatible with DataCite. 
+
+JSON Schema for machine-actionable scientific poster metadata. Derived from and compatible with [DataCite Metadata Schema 4.6](https://datacite.org/), with poster-specific extensions for conference presentations.
+
+## Overview
+
+Scientific posters are a primary means of scholarly communication at conferences, yet their content remains largely inaccessible to programmatic discovery and analysis. This schema enables:
+
+- **Machine-actionable metadata** extraction from poster content
+- **DOI registration** compatibility via DataCite
+- **FAIR compliance** for poster artifacts
+- **AI-ready** structured data for automated processing
+
+## Schema Structure
+
+The schema extends DataCite's mandatory and recommended properties with poster-specific fields:
+
+### DataCite Core Properties
+
+| Property | Requirement | Description |
+|----------|-------------|-------------|
+| `creators` | Mandatory | Authors with ORCID and affiliation support |
+| `titles` | Mandatory | Poster title(s) |
+| `publisher` | Mandatory | Conference organizer or institution |
+| `publicationYear` | Mandatory | Year of presentation |
+| `subjects` | Recommended | Keywords and classification terms |
+| `dates` | Recommended | Presentation and conference dates |
+| `language` | Recommended | Primary language (ISO 639) |
+| `types` | Mandatory | Resource type (Conference Poster) |
+| `relatedIdentifiers` | Recommended | Links to papers, datasets, software |
+| `formats` | Recommended | File format (PDF, PNG, etc.) |
+| `rightsList` | Optional | License information |
+| `descriptions` | Recommended | Abstract, Methods, Technical Info |
+| `fundingReferences` | Recommended | Grant and funder information |
+
+### Poster-Specific Extensions
+
+| Property | Description |
+|----------|-------------|
+| `conference` | Conference name, location, dates, URI, acronym |
+| `posterContent` | Structured sections extracted from poster |
+| `imageCaption` | Captions for figures in the poster |
+| `tableCaption` | Captions for tables in the poster |
+| `domain` | Research domain or field of study |
+| `species` | Species information if applicable |
+
+## Accepted Poster File Formats
+
+### Primary Formats (Recommended)
+
+| Format | Extension | Notes |
+|--------|-----------|-------|
+| **PDF** | `.pdf` | Most common. Must be single-page. |
+| **PNG** | `.png` | Lossless image format. |
+| **JPEG** | `.jpg`, `.jpeg` | Widely used image format. |
+| **TIFF** | `.tiff`, `.tif` | High-quality, print-ready. |
+| **PowerPoint** | `.pptx` | Must be single-slide. |
+| **SVG** | `.svg` | Vector format from Figma/Illustrator. |
+
+### Additional Supported Formats
+
+| Format | Extension | Notes |
+|--------|-----------|-------|
+| PowerPoint Legacy | `.ppt` | Older PowerPoint format. |
+| OpenDocument | `.odp` | LibreOffice/OpenOffice. |
+| Keynote | `.key` | Apple Keynote (macOS). |
+| EPS | `.eps` | Encapsulated PostScript. |
+| WebP | `.webp` | Modern web image format. |
+| GIF | `.gif` | Limited colors. |
+| BMP | `.bmp` | Uncompressed bitmap. |
+| HEIF | `.heic`, `.heif` | Apple high-efficiency. |
+
+### Requirements
+
+- **Single-page/single-slide** documents only for multi-page formats
+- Multi-page documents are flagged for review
+- Recommended export order: PDF → SVG → PNG
+
+## Example
+
+```json
+{
+  "$schema": "https://posters.science/schema/v0.1/poster_schema.json",
+  "creators": [
+    {
+      "name": "O'Neill, Jamey",
+      "nameType": "Personal",
+      "nameIdentifiers": [
+        {
+          "nameIdentifier": "https://orcid.org/0009-0001-8532-8405",
+          "nameIdentifierScheme": "ORCID",
+          "schemeURI": "https://orcid.org"
+        }
+      ],
+      "affiliation": [
+        {
+          "name": "San Diego State University",
+          "affiliationIdentifier": "https://ror.org/01zj77w89",
+          "affiliationIdentifierScheme": "ROR"
+        }
+      ]
+    }
+  ],
+  "titles": [
+    {
+      "title": "CarD-T: LLM Automated Literature Review for Carcinogen Analysis"
+    }
+  ],
+  "publisher": {
+    "name": "American Association for Cancer Research"
+  },
+  "publicationYear": 2025,
+  "conference": {
+    "conferenceName": "AACR Annual Meeting 2025",
+    "conferenceLocation": "Chicago, Illinois, USA",
+    "conferenceStartDate": "2025-04-25",
+    "conferenceEndDate": "2025-04-30",
+    "conferenceAcronym": "AACR 2025"
+  },
+  "posterContent": {
+    "sections": [
+      {
+        "sectionTitle": "Abstract",
+        "sectionContent": "Pipeline combining transformer ML with probabilistic analysis..."
+      },
+      {
+        "sectionTitle": "Methods",
+        "sectionContent": "Named Entity Recognition ELECTRA LLM trained on PubMed..."
+      }
+    ]
+  },
+  "types": {
+    "resourceType": "Conference Poster",
+    "resourceTypeGeneral": "Image"
+  }
+}
+```
+
+## Manual Annotation Ground Truth
+
+The [`manual_poster_annotation/`](../manual_poster_annotation/) directory contains manually annotated posters serving as ground truth for AI extraction validation. Each annotation includes:
+
+| File | Description |
+|------|-------------|
+| `{id}.pdf` | Original poster file |
+| `{id}_raw.md` | Extracted text in structured markdown |
+| `{id}.json` | Full metadata JSON (complete schema) |
+| `{id}_sub-json.json` | Poster content subset (AI-ready) |
+
+See the [manual annotation README](../manual_poster_annotation/README.md) for details.
+
+## Validation
+
+```bash
+# Using ajv-cli
+npm install -g ajv-cli
+ajv validate -s poster_schema.json -d example.json
+
+# Using Python jsonschema
+pip install jsonschema
+python -c "
+import json
+from jsonschema import validate
+schema = json.load(open('poster_schema.json'))
+instance = json.load(open('example.json'))
+validate(instance, schema)
+print('Valid!')
+"
+```
+
+## Related Standards
+
+- **DataCite Metadata Schema 4.6**: [schema.datacite.org](https://schema.datacite.org)
+- **ORCID**: [orcid.org](https://orcid.org) - Author identifiers
+- **ROR**: [ror.org](https://ror.org) - Organization identifiers
+- **Crossref Funder Registry**: Funding organization identifiers
+
+## License
+
+MIT License. See [LICENSE](LICENSE) for details.
+
+## Contributing
+
+Contributions welcome. Please open an issue or pull request on [GitHub](https://github.com/fairdataihub/posters-science-json-schema).
