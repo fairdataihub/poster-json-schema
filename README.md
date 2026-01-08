@@ -33,6 +33,25 @@ The JSON extraction for this poster is available in our examples repository:
 
 This example shows how a poster PDF is transformed into machine-actionable metadata following the schema, including creator information with ORCIDs, conference metadata, and structured poster content sections.
 
+## Extraction Method
+
+The Posters.science platform uses AI-powered processing to automatically extract metadata from scientific posters. The system processes poster uploads through a multi-stage pipeline:
+
+1. **OCR Processing** — Text extraction from poster PDFs using optical character recognition
+2. **Structure Recognition** — Identification of sections, figures, tables, and layout elements
+3. **Entity Extraction** — Recognition of authors, institutions, dates, and keywords using a large language model
+4. **Metadata Enrichment** — Validation and linking against external databases (ORCID, ROR, Crossref)
+5. **Schema Generation** — Output of structured JSON conforming to this schema
+
+The extraction tool uses **Llama 3.3 70B** with 4-bit quantization for structured information extraction. Key capabilities include:
+
+- Handling irregular poster layouts and multi-column designs
+- Understanding scientific terminology across disciplines
+- Robustness to OCR artifacts and typos
+- Extracting implicit information from context
+
+Each extracted field receives a confidence score. Fields below the confidence threshold are flagged for user review during submission.
+
 ## Schema Structure
 
 The schema extends DataCite's mandatory and recommended properties with poster-specific fields:
