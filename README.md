@@ -66,4 +66,4 @@ This work is shared under the MIT License. See [LICENSE](LICENSE) for details.
 Contributions and feedback are welcomed. Please open an issue or pull request on [GitHub](https://github.com/fairdataihub/posters-science-json-schema).
 
 ## How to cite
-If you use this work, please cite this repository following the instructions on provided in [CITATION.cff].
+If you use this work, please cite this repository following the instructions on provided in [CITATION.cff](CITATION.cff).
