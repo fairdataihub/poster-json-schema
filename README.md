@@ -1,55 +1,23 @@
-# posters-science-json-schema
+# JSON Schema for Machine Actionable Scientific Poster
 
 JSON Schema for machine-actionable scientific poster metadata. Derived from and compatible with [DataCite Metadata Schema 4.6](https://datacite.org/), with poster-specific extensions for conference presentations.
 
 ## Overview
 
-Scientific posters are a primary means of scholarly communication at conferences, yet their content remains largely inaccessible to programmatic discovery and analysis. This schema enables:
+Scientific posters are a primary means of scholarly communication at conferences. They are usually shared in PDF or similar format. Given that the structure vary greatly from poster to poster, their content remains largely inaccessible to programmatic discovery and analysis. We propose here a JSON schema for representing poster that enables:
+- **Machine-actionable** analysis of poster content
+- **FAIR compliance** when sharing posters 
+- **AI-ready**, structured representation for automated processing
 
-- **Machine-actionable metadata** extraction from poster content
-- **DOI registration** compatibility via DataCite
-- **FAIR compliance** for poster artifacts
-- **AI-ready** structured data for automated processing
+This schema is developed as par of our development of [posters.science](https://posters.science), where we are building a tool for automatically creating a JSON Schema version given the PDF file of a psoter. Our vision is that anytime a poster is shared (as PDF or other similar format), it will be accompanied with a poster.json file that comply with this JSON schema that enables greater findabily and reusability. We hope that this schema and its assciated tools can be useful to anyone wanting to represent scientific posters into a machine-actionable format.
 
-**Platform**: [posters.science](https://posters.science)
-
-**Documentation**: [Posters.science User Experience](https://zenodo.org/records/18177177) (DOI: 10.5281/zenodo.18177177)
-
-## Real-World Example
-
-To demonstrate the schema in practice, we provide a complete extraction example from a real poster archived on Zenodo:
-
-### Source Poster
-
-| Field | Value |
-|-------|-------|
-| **Title** | Presenting the Actionable Guidelines for FAIR Research Software Task Force |
-| **DOI** | [10.5281/zenodo.17268692](https://zenodo.org/records/17268692) |
-| **Conference** | US Research Software Engineering Conference 2025 (USRSE'25) |
-| **Authors** | Bhavesh Patel, Daniel Garijo, Actionable FAIR4RS Task Force |
-
-### Extracted JSON
-
-The JSON extraction for this poster is available in our examples repository:
-
-- **JSON files**: [fairdataihub/posters-science-json-examples/17268692](https://github.com/fairdataihub/posters-science-json-examples/tree/main/17268692)
-- **Poster GitHub repo**: [fairdataihub/actionableFAIR4RS-USRSE-2025](https://github.com/fairdataihub/actionableFAIR4RS-USRSE-2025)
-
-This example shows how a poster PDF is transformed into machine-actionable metadata following the schema, including creator information with ORCIDs, conference metadata, and structured poster content sections.
-
-## Extraction Method
-
-The [Posters.science](https://posters.science) platform automatically extracts metadata from uploaded posters using a two-stage process:
-
-1. **Text Extraction** — The system reads text from your poster file. PDFs are processed with layout-aware extraction that preserves reading order. Image files (JPG, PNG) use a vision model that reads text directly from the image.
-
-2. **Structured Output** — The extracted text is analyzed by a language model that identifies standard poster sections (Abstract, Methods, Results, etc.), authors, affiliations, and other metadata. The output is formatted as structured JSON conforming to this schema.
-
-The pipeline has been validated against manually annotated reference posters, achieving high accuracy for text capture (96%), numeric data preservation (94%), and structural completeness.
-
-## Schema Structure
+[ADD Figure with screenshot of poster on left and screenshot of json representation on the right.]
 
 The schema extends DataCite's mandatory and recommended properties with poster-specific fields:
+
+## Development Approach
+
+The schema is based on the [DataCite Metadata Schema 4.6](https://datacite.org/), with poster-specific adjustement, including extensions for including conference-related information.
 
 ### DataCite Core Properties
 
@@ -80,120 +48,22 @@ The schema extends DataCite's mandatory and recommended properties with poster-s
 | `domain` | Research domain or field of study |
 | `species` | Species information if applicable |
 
-## Accepted Poster File Formats
 
-### Primary Formats (Recommended)
+## Example
+We provide an example in the [example](example) folder using the poster available at https://zenodo.org/records/17268692.
 
-| Format | Extension | Notes |
-|--------|-----------|-------|
-| **PDF** | `.pdf` | Most common. Must be single-page. |
-| **PNG** | `.png` | Lossless image format. |
-| **JPEG** | `.jpg`, `.jpeg` | Widely used image format. |
-| **TIFF** | `.tiff`, `.tif` | High-quality, print-ready. |
-| **PowerPoint** | `.pptx` | Must be single-slide. |
-| **SVG** | `.svg` | Vector format from Figma/Illustrator. |
-
-### Additional Supported Formats
-
-| Format | Extension | Notes |
-|--------|-----------|-------|
-| PowerPoint Legacy | `.ppt` | Older PowerPoint format. |
-| OpenDocument | `.odp` | LibreOffice/OpenOffice. |
-| Keynote | `.key` | Apple Keynote (macOS). |
-| EPS | `.eps` | Encapsulated PostScript. |
-| WebP | `.webp` | Modern web image format. |
-| GIF | `.gif` | Limited colors. |
-| BMP | `.bmp` | Uncompressed bitmap. |
-| HEIF | `.heic`, `.heif` | Apple high-efficiency. |
-
-### Requirements
-
-- **Single-page/single-slide** documents only for multi-page formats
-- Multi-page documents are flagged for review
-- Recommended export order: PDF → SVG → PNG
-
-## Example JSON Structure
-
-```json
-{
-  "$schema": "https://posters.science/schema/v0.1/poster_schema.json",
-  "creators": [
-    {
-      "name": "O'Neill, Jamey",
-      "nameType": "Personal",
-      "nameIdentifiers": [
-        {
-          "nameIdentifier": "https://orcid.org/0009-0001-8532-8405",
-          "nameIdentifierScheme": "ORCID",
-          "schemeURI": "https://orcid.org"
-        }
-      ],
-      "affiliation": [
-        {
-          "name": "San Diego State University",
-          "affiliationIdentifier": "https://ror.org/01zj77w89",
-          "affiliationIdentifierScheme": "ROR"
-        }
-      ]
-    }
-  ],
-  "titles": [
-    {
-      "title": "CarD-T: LLM Automated Literature Review for Carcinogen Analysis"
-    }
-  ],
-  "publisher": {
-    "name": "American Association for Cancer Research"
-  },
-  "publicationYear": 2025,
-  "conference": {
-    "conferenceName": "AACR Annual Meeting 2025",
-    "conferenceLocation": "Chicago, Illinois, USA",
-    "conferenceStartDate": "2025-04-25",
-    "conferenceEndDate": "2025-04-30",
-    "conferenceAcronym": "AACR 2025"
-  },
-  "posterContent": {
-    "sections": [
-      {
-        "sectionTitle": "Abstract",
-        "sectionContent": "Pipeline combining transformer ML with probabilistic analysis..."
-      },
-      {
-        "sectionTitle": "Methods",
-        "sectionContent": "Named Entity Recognition ELECTRA LLM trained on PubMed..."
-      }
-    ]
-  },
-  "types": {
-    "resourceType": "Conference Poster",
-    "resourceTypeGeneral": "Image"
-  }
-}
-```
-
-## Ground Truth Examples
-
-The [fairdataihub/posters-science-json-examples](https://github.com/fairdataihub/posters-science-json-examples) repository contains manually annotated posters serving as ground truth for AI extraction. Each annotation includes:
-
-| File | Description |
-|------|-------------|
-| `{id}.pdf` | Original poster file |
-| `{id}_raw.md` | Extracted text in structured markdown |
-| `{id}.json` | Full metadata JSON (complete schema) |
-| `{id}_sub-json.json` | Poster content subset (AI-ready) |
 
 ## Related Standards
-
 - **DataCite Metadata Schema 4.6**: [schema.datacite.org](https://schema.datacite.org)
 - **ORCID**: [orcid.org](https://orcid.org) - Author identifiers
 - **ROR**: [ror.org](https://ror.org) - Organization identifiers
 - **Crossref Funder Registry**: Funding organization identifiers
 
 ## License
-
-MIT License. See [LICENSE](LICENSE) for details.
+This work is shared under the MIT License. See [LICENSE](LICENSE) for details.
 
 ## Contributing
+Contributions and feedback are welcomed. Please open an issue or pull request on [GitHub](https://github.com/fairdataihub/posters-science-json-schema).
 
-Contributions welcome. Please open an issue or pull request on [GitHub](https://github.com/fairdataihub/posters-science-json-schema).
+## How to cite
+If you use this work, please cite this repository following the instructions on provided in [CITATION.cff].
