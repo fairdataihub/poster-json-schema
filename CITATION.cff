@@ -1,0 +1,28 @@
+title: poster-json-schema
+authors:
+  - given-names: Jamey
+    family-names: ONeill
+    email: joneill@calmi2.org
+    affiliation: FAIR Data Innovations Hub, California Medical Innovations Institute
+  - given-names: Bhavesh
+    family-names: Patel
+    email: bpatel@calmi2.org
+    affiliation: FAIR Data Innovations Hub, California Medical Innovations Institute
+cff-version: 1.2.0
+message: If you use this software, please cite it using the metadata from this file.
+type: software
+abstract: JSON schema for machine-actionable and FAIR posters
+keywords:
+  - conference
+  - datacite
+  - discovery
+  - AI Ready
+  - fair
+  - metadata
+  - poster
+  - reuse
+  - science
+license: MIT-Modern-Variant
+repository-code: https://github.com/fairdataihub/poster-json-schema
+date-released: 2026-01-07
+version: v0.1

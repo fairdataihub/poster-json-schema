@@ -1,0 +1,90 @@
+{
+  "name": "poster-json-schema",
+  "@context": "https://w3id.org/codemeta/3.0",
+  "author": [
+    {
+      "affiliation": {
+        "name": "FAIR Data Innovations Hub, California Medical Innovations Institute",
+        "type": "Organization"
+      },
+      "email": "joneill@calmi2.org",
+      "familyName": "ONeill",
+      "id": "https://orcid.org/0009-0001-8532-8405",
+      "givenName": "Jamey",
+      "type": "Person"
+    },
+    {
+      "affiliation": {
+        "name": "FAIR Data Innovations Hub, California Medical Innovations Institute",
+        "type": "Organization"
+      },
+      "email": "bpatel@calmi2.org",
+      "familyName": "Patel",
+      "id": "https://0000-0002-0307-262X",
+      "givenName": "Bhavesh",
+      "type": "Person"
+    }
+  ],
+  "contributor": [
+    {
+      "affiliation": {
+        "name": "FAIR Data Innovations Hub, California Medical Innovations Institute",
+        "type": "Organization"
+      },
+      "email": "sSoundarajan@calmi2.org",
+      "familyName": "Soundarajan",
+      "id": "https://0000-0003-2829-8032",
+      "givenName": "Sanjay",
+      "type": "Person"
+    },
+    {
+      "affiliation": {
+        "name": "FAIR Data Innovations Hub, California Medical Innovations Institute",
+        "type": "Organization"
+      },
+      "email": "dportillo@calmi2.org",
+      "familyName": "Portillo",
+      "id": "https://0000-0002-4306-4464",
+      "givenName": "Dorian",
+      "type": "Person"
+    },
+    {
+      "affiliation": {
+        "name": "FAIR Data Innovations Hub, California Medical Innovations Institute",
+        "type": "Organization"
+      },
+      "email": "nZeinali@calmi2.org",
+      "familyName": "Zeinali",
+      "id": "https://0009-0009-1546-9972",
+      "givenName": "Nahid",
+      "type": "Person"
+    }
+  ],
+  "codeRepository": "https://github.com/fairdataihub/poster-json-schema",
+  "dateCreated": "2025-10-01",
+  "dateModified": "2026-01-07",
+  "description": "JSON schema for machine-actionable and FAIR posters",
+  "developmentStatus": "wip",
+  "funder": {
+    "name": "The Navigation Fund",
+    "type": "Organization"
+  },
+  "issueTracker": "https://github.com/fairdataihub/poster-json-schema/issues",
+  "keywords": [
+    "conference",
+    "datacite",
+    "discovery",
+    "AI Ready",
+    "fair",
+    "metadata",
+    "poster",
+    "reuse",
+    "science"
+  ],
+  "license": "https://spdx.org/licenses/MIT-Modern-Variant",
+  "programmingLanguage": [
+    "JavaScript"
+  ],
+  "version": "v0.1",
+  "type": "SoftwareSourceCode"
+}
