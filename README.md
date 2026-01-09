@@ -57,7 +57,7 @@ We provide an example in the [example](example) folder using the poster availabl
 This work is shared under the MIT License. See [LICENSE](LICENSE) for details.
 
 ## Contributing
-Contributions and feedback are welcomed. Please open an issue or pull request on [GitHub](https://github.com/fairdataihub/posters-science-json-schema).
+Contributions and feedback are welcomed. Please open an issue or pull request on [GitHub](https://github.com/fairdataihub/poster-json-schema).
 
 ## How to cite
 If you use this work, please cite this repository following the instructions provided in [CITATION.cff](CITATION.cff).
