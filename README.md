@@ -7,6 +7,8 @@ Scientific posters are a primary means of scholarly communication at conferences
 - **FAIR compliance** when sharing posters 
 - **AI-ready**, structured representation for automated processing
 
+👉 **Full JSON schema**: [poster_schema.json](poster_schema.json)
+
 This schema is developed as part of our development of [posters.science](https://posters.science), where we are also building a tool that takes the PDF file of a poster and automatically creates a JSON version compatible with this schema. Our vision is that anytime a poster is shared (as PDF or other similar format), it will be accompanied by a poster.json file that complies with this JSON schema to enable greater findability and reusability. We hope that this schema and its associated tools can be useful to anyone wanting to represent scientific posters in a machine-actionable format.
 
 ## Development Approach
