@@ -1,15 +1,13 @@
-# JSON Schema for Machine Actionable Scientific Poster
-
-JSON Schema for machine-actionable scientific poster metadata. Derived from and compatible with [DataCite Metadata Schema 4.6](https://datacite.org/), with poster-specific extensions for conference presentations.
+# JSON Schema for Machine Actionable Scientific Posters
 
 ## Overview
 
-Scientific posters are a primary means of scholarly communication at conferences. They are usually shared in PDF or similar format. Given that the structure vary greatly from poster to poster, their content remains largely inaccessible to programmatic discovery and analysis. We propose here a JSON schema for representing poster that enables:
+Scientific posters are a primary means of scholarly communication at conferences. Given that posters are usually shared in PDF or similar format and that their structure vary greatly from poster to poster, their content remains largely inaccessible to programmatic discovery and analysis. We propose here a JSON schema for representing poster that enables:
 - **Machine-actionable** analysis of poster content
 - **FAIR compliance** when sharing posters 
 - **AI-ready**, structured representation for automated processing
 
-This schema is developed as par of our development of [posters.science](https://posters.science), where we are building a tool for automatically creating a JSON Schema version given the PDF file of a psoter. Our vision is that anytime a poster is shared (as PDF or other similar format), it will be accompanied with a poster.json file that comply with this JSON schema that enables greater findabily and reusability. We hope that this schema and its assciated tools can be useful to anyone wanting to represent scientific posters into a machine-actionable format.
+This schema is developed as par of our development of [posters.science](https://posters.science), where we are also building a tool that takes the PDF file of a poster and automatically creates a JSON version compatible with this schema. Our vision is that anytime a poster is shared (as PDF or other similar format), it will be accompanied with a poster.json file that comply with this JSON schema to enable greater findabily and reusability. We hope that this schema and its assciated tools can be useful to anyone wanting to represent scientific posters into a machine-actionable format.
 
 [ADD Figure with screenshot of poster on left and screenshot of json representation on the right.]
 
@@ -17,7 +15,7 @@ The schema extends DataCite's mandatory and recommended properties with poster-s
 
 ## Development Approach
 
-The schema is based on the [DataCite Metadata Schema 4.6](https://datacite.org/), with poster-specific adjustement, including extensions for including conference-related information.
+The schema is based on the [DataCite Metadata Schema 4.6](https://datacite.org/), with poster-specific adjustements, including extensions for including conference-related information.
 
 ### DataCite Core Properties
 
