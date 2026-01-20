@@ -809,47 +809,77 @@
       },
       "additionalProperties": false
     },
-    "tableCaption": {
-      "type": "array",
-      "description": "List of captions for tables in the poster. Each item represents captions for a single table.",
-      "items": {
-        "type": "object",
-        "description": "Captions for a single table in the poster",
-        "properties": {
-          "caption1": {
-            "type": "string",
-            "minLength": 1,
-            "description": "First table caption or caption line"
+    "tableCaptions": {
+      "type": "object",
+      "description": "Captions for tables in the poster.",
+      "properties": {
+        "captions": {
+          "type": "array",
+          "description": "Array of caption objects, one per table in the poster.",
+          "items": {
+            "type": "object",
+            "description": "Caption information for a single table",
+            "properties": {
+              "captionParts": {
+                "type": "array",
+                "description": "Array of caption text segments for this table. Can include table label, title, description, etc.",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "examples": [
+                  ["Table 1. Summary of Results", "Comparison of model performance across datasets"]
+                ]
+              }
+            },
+            "additionalProperties": false
           },
-          "caption2": {
-            "type": "string",
-            "minLength": 1,
-            "description": "Second table caption or caption line"
-          }
+          "minItems": 1
         },
-        "additionalProperties": true
-      }
+        "unstructuredCaptions": {
+          "type": "string",
+          "description": "Optional fallback for table captions that cannot be organized into structured parts.",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
     },
-    "imageCaption": {
-      "type": "array",
-      "description": "List of captions for images in the poster. Each item represents captions for a single image.",
-      "items": {
-        "type": "object",
-        "description": "Captions for a single image in the poster",
-        "properties": {
-          "caption1": {
-            "type": "string",
-            "minLength": 1,
-            "description": "First image caption or caption line"
+    "imageCaptions": {
+      "type": "object",
+      "description": "Captions for images/figures in the poster.",
+      "properties": {
+        "captions": {
+          "type": "array",
+          "description": "Array of caption objects, one per image in the poster.",
+          "items": {
+            "type": "object",
+            "description": "Caption information for a single image",
+            "properties": {
+              "captionParts": {
+                "type": "array",
+                "description": "Array of caption text segments for this image. Can include figure label, title, description, etc.",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "examples": [
+                  ["Figure 1. Overview of the Task Force", "Shows approximately 12 active members from various locations..."]
+                ]
+              }
+            },
+            "additionalProperties": false
           },
-          "caption2": {
-            "type": "string",
-            "minLength": 1,
-            "description": "Second image caption or caption line"
-          }
+          "minItems": 1
         },
-        "additionalProperties": true
-      }
+        "unstructuredCaptions": {
+          "type": "string",
+          "description": "Optional fallback for image captions that cannot be organized into structured parts.",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
     },
     "domain": {
       "type": "string",
