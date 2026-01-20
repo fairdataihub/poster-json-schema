@@ -811,76 +811,50 @@
       "additionalProperties": false
     },
     "tableCaptions": {
-      "type": "object",
-      "description": "Captions for tables in the poster.",
-      "properties": {
-        "captions": {
-          "type": "array",
-          "description": "Array of caption objects, one per table in the poster.",
-          "items": {
-            "type": "object",
-            "description": "Caption information for a single table",
-            "properties": {
-              "captionParts": {
-                "type": "array",
-                "description": "Array of caption text segments for this table. Can include table label, title, description, etc.",
-                "items": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "minItems": 1,
-                "examples": [
-                  ["Table 1. Summary of Results", "Comparison of model performance across datasets"]
-                ]
-              }
+      "type": "array",
+      "description": "Array of table caption objects. Each object represents one table and contains its caption text segments.",
+      "items": {
+        "type": "object",
+        "description": "Caption information for a single table. Structure allows for future extension with properties like tableId or tableNumber.",
+        "properties": {
+          "captions": {
+            "type": "array",
+            "description": "Array of caption text segments for this table. Can include table label, title, description, etc.",
+            "items": {
+              "type": "string",
+              "minLength": 1
             },
-            "additionalProperties": false
-          },
-          "minItems": 1
+            "minItems": 1,
+            "examples": [
+              ["Table 1. Summary of Results", "Comparison of model performance across datasets"]
+            ]
+          }
         },
-        "unstructuredCaptions": {
-          "type": "string",
-          "description": "Optional fallback for table captions that cannot be organized into structured parts.",
-          "minLength": 1
-        }
-      },
-      "additionalProperties": false
+        "additionalProperties": false
+      }
     },
     "imageCaptions": {
-      "type": "object",
-      "description": "Captions for images/figures in the poster.",
-      "properties": {
-        "captions": {
-          "type": "array",
-          "description": "Array of caption objects, one per image in the poster.",
-          "items": {
-            "type": "object",
-            "description": "Caption information for a single image",
-            "properties": {
-              "captionParts": {
-                "type": "array",
-                "description": "Array of caption text segments for this image. Can include figure label, title, description, etc.",
-                "items": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "minItems": 1,
-                "examples": [
-                  ["Figure 1. Overview of the Task Force", "Shows approximately 12 active members from various locations..."]
-                ]
-              }
+      "type": "array",
+      "description": "Array of image caption objects. Each object represents one image/figure and contains its caption text segments.",
+      "items": {
+        "type": "object",
+        "description": "Caption information for a single image. Structure allows for future extension with properties like imageId or figureNumber.",
+        "properties": {
+          "captions": {
+            "type": "array",
+            "description": "Array of caption text segments for this image. Can include figure label, title, description, etc.",
+            "items": {
+              "type": "string",
+              "minLength": 1
             },
-            "additionalProperties": false
-          },
-          "minItems": 1
+            "minItems": 1,
+            "examples": [
+              ["Figure 1. Overview of the Task Force", "Shows approximately 12 active members from various locations..."]
+            ]
+          }
         },
-        "unstructuredCaptions": {
-          "type": "string",
-          "description": "Optional fallback for image captions that cannot be organized into structured parts.",
-          "minLength": 1
-        }
-      },
-      "additionalProperties": false
+        "additionalProperties": false
+      }
     },
     "domain": {
       "type": "string",
