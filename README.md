@@ -39,8 +39,8 @@ The schema is based on the [DataCite Metadata Schema 4.6](https://datacite.org/)
 |----------|-------------|
 | `conference` | Conference name, location, dates, URI, acronym |
 | `posterContent` | Structured sections extracted from poster |
-| `imageCaption` | Captions for figures in the poster |
-| `tableCaption` | Captions for tables in the poster |
+| `imageCaptions` | Captions for figures in the poster (array of caption parts per image) |
+| `tableCaptions` | Captions for tables in the poster (array of caption parts per table) |
 | `domain` | Research domain or field of study |
 | `species` | Species information if applicable |
 
