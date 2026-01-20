@@ -402,7 +402,7 @@
               },
               {
                 "const": "Presented",
-                "description": "The date the resource was presented, such as at a conference."
+                "description": "POSTER-SPECIFIC EXTENSION: The date the resource was presented, such as at a conference. NOTE: For DataCite Metadata Schema compatibility, consider using 'Issued' instead with the dateInformation sub-property to provide context (e.g., 'Presented at [Conference Name]'). This ensures consistent dateTypes across different resource types."
               },
               {
                 "const": "Other",
@@ -412,8 +412,8 @@
           },
           "dateInformation": {
             "type": ["string", "null"],
-            "description": "Additional information about the date of the item.",
-            "examples": ["2025-01-01", "55 BCE"]
+            "description": "Additional information about the date. Can be used to provide context, e.g., 'Presented at US-RSE 2025 Conference' when using dateType 'Issued' for poster presentation dates.",
+            "examples": ["Presented at US-RSE 2025 Conference", "2025-01-01", "55 BCE"]
           }
         },
         "required": ["date", "dateType"],
@@ -716,7 +716,8 @@
     },
     "conference": {
       "type": "object",
-      "description": "Comment: there is no standard for conferenceinfo based on the DataCite Field",
+      "$comment": "POSTER-SPECIFIC EXTENSION: DataCite feedback (Jan 2026) indicates conference information should be handled through RelatedIdentifier and/or RelatedItem fields for DataCite Metadata Schema compatibility. See example: https://github.com/datacite/schema/blob/schema-4.7-draft/source/meta/kernel-4.7/example/datacite-example-poster-v4.xml (prepared for DataCite Schema 4.7 release with resourceTypeGeneral 'Poster'). This property is retained for poster-specific use cases where richer conference metadata is needed.",
+      "description": "Conference information for the poster presentation. NOTE: For DataCite Metadata Schema compatibility, consider using RelatedIdentifier/RelatedItem fields instead. This property is a poster-specific extension for capturing detailed conference metadata.",
       "properties": {
         "conferenceName": {
           "type": "string",
