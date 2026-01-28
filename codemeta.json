@@ -84,7 +84,7 @@
   ],
   "codeRepository": "https://github.com/fairdataihub/poster-json-schema",
   "dateCreated": "2025-10-01",
-  "dateModified": "2026-01-09",
+  "dateModified": "2026-01-28",
   "datePublished": "2026-01-28",
   "description": "JSON schema for machine-actionable and FAIR posters",
   "developmentStatus": "wip",
@@ -110,6 +110,7 @@
     "JavaScript"
   ],
   "schema:releaseNotes": "## What's Changed\r\n* feat: ✨ LICENSE file added by @codefair-io[bot] in https://github.com/fairdataihub/poster-json-schema/pull/6\r\n* feat: ✨ Add code metadata files by @codefair-io[bot] in https://github.com/fairdataihub/poster-json-schema/pull/7\r\n* Implement UC3 and DataCite schema feedback by @jimnoneill in https://github.com/fairdataihub/poster-json-schema/pull/8\r\n\r\n## New Contributors\r\n* @jimnoneill made their first contribution in https://github.com/fairdataihub/poster-json-schema/pull/2\r\n* @bvhpatel made their first contribution in https://github.com/fairdataihub/poster-json-schema/pull/5\r\n* @codefair-io[bot] made their first contribution in https://github.com/fairdataihub/poster-json-schema/pull/6\r\n\r\n**Full Changelog**: https://github.com/fairdataihub/poster-json-schema/commits/v0.1.0",
-  "version": "v0.1",
-  "type": "SoftwareSourceCode"
+  "version": "0.1.0",
+  "type": "SoftwareSourceCode",
+  "identifier": "10.5281/zenodo.18407621"
 }
