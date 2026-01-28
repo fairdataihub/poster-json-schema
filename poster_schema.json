@@ -1,5 +1,5 @@
 {
-  "$id": "https://posters.science/schema/v0.2/poster_schema.json",
+  "$id": "https://posters.science/schema/v0.1/poster_schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Machine Actionable Scientific Poster Schema",
   "description": "JSON Schema for machine actionable scientific posters. It is based on the DataCite schema v4.6 but extended for poster-specific metadata that were not available in the DataCite schema. Mandatory (M) properties must be provided; Optional (O) properties provide richer description.",
