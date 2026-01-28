@@ -102,24 +102,24 @@ However, DataCite's `relatedItem` does NOT natively include:
 
 ---
 
-## Proposed Schema Changes (v0.2)
+## Implemented Schema Changes (v0.2)
 
-| Change | From | To | Breaking? |
-|--------|------|-----|-----------|
-| Rename posterContent | `posterContent` | `content` | Yes (major) |
-| Rename domain | `domain` | `researchField` | Yes (major) |
-| Add relatedItem | N/A | Add DataCite 4.6 `relatedItem` | No (additive) |
-| Document conference | N/A | Clarify as extension | No (docs only) |
+| Change | From | To | Breaking? | Status |
+|--------|------|-----|-----------|--------|
+| Rename posterContent | `posterContent` | `content` | Yes (major) | ✅ Done |
+| Rename domain | `domain` | `researchField` | Yes (major) | ✅ Done |
+| Add relatedItem | N/A | Add DataCite 4.6 `relatedItem` | No (additive) | Pending |
+| Document conference | N/A | Clarify as extension | No (docs only) | ✅ Done |
 
 ---
 
 ## Action Items
 
-- [ ] Discuss proposed changes with UC3 and DataCite contacts
-- [ ] Draft schema v0.2 with proposed changes
+- [x] Discuss proposed changes with UC3 and DataCite contacts
+- [x] Draft schema v0.2 with proposed changes
 - [ ] Create migration guide for v0.1 → v0.2
 - [ ] Submit RFC to DataCite for conference metadata enhancements
-- [ ] Update example JSON files to reflect changes
+- [x] Update example JSON files to reflect changes
 - [ ] Update posters.science extraction pipeline for new field names
 
 ---

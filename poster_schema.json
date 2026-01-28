@@ -1,5 +1,5 @@
 {
-  "$id": "https://posters.science/schema/v0.1/poster_schema.json",
+  "$id": "https://posters.science/schema/v0.2/poster_schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Machine Actionable Scientific Poster Schema",
   "description": "JSON Schema for machine actionable scientific posters. It is based on the DataCite schema v4.6 but extended for poster-specific metadata that were not available in the DataCite schema. Mandatory (M) properties must be provided; Optional (O) properties provide richer description.",
@@ -793,9 +793,9 @@
       },
       "additionalProperties": false
     },
-    "posterContent": {
+    "content": {
       "type": "object",
-      "description": "Text content extracted from the poster. The poster's title is stored under separate DataCite schema titles field. Remaining content is organized into sections here with flexible naming (e.g., 'Introduction', 'Methods', 'Approach', 'Results & Conclusions', etc.).",
+      "description": "Text content extracted from the resource. For posters, the title is stored under the separate DataCite schema titles field. Remaining content is organized into sections here with flexible naming (e.g., 'Introduction', 'Methods', 'Approach', 'Results & Conclusions', etc.). This field is intentionally generic to support other visual resource types (presentations, infographics, one-pagers).",
       "properties": {
         "sections": {
           "type": "array",
@@ -875,10 +875,10 @@
         "additionalProperties": false
       }
     },
-    "domain": {
+    "researchField": {
       "type": "string",
       "minLength": 1,
-      "description": "Primary domain or field of study for the research presented in the poster",
+      "description": "Primary research field or discipline area for the research presented. Renamed from 'domain' to avoid confusion with biological taxonomy (where domain is the highest rank above kingdom/species).",
       "examples": ["Machine Learning", "Clinical Medicine", "Bioinformatics", "Public Health", "Neuroscience"]
     }
   },
