@@ -7,7 +7,7 @@
   "additionalProperties": true,
   "properties": {
     "doi": {
-      "$comment": "Optional field. This system generates its own in-house unique identifiers via postersscienceIdentifier, but DOI can be provided if available.",
+      "$comment": "Optional. If provided, the system should auto-extract prefix/suffix and populate the identifiers array. The system generates its own postersscienceIdentifier, so external DOI is not required at submission time.",
       "type": "string",
       "description": "The Digital Object Identifier of the item.",
       "minLength": 1,
@@ -47,7 +47,6 @@
         "required": ["identifier", "identifierType"],
         "additionalProperties": false
       },
-      "minItems": 1,
       "uniqueItems": true
     },
     "alternateIdentifiers": {
@@ -438,7 +437,6 @@
         "required": ["date", "dateType"],
         "additionalProperties": false
       },
-      "minItems": 1,
       "uniqueItems": true
     },
     "language": {
@@ -536,7 +534,6 @@
         "type": "string",
         "minLength": 1
       },
-      "minItems": 1,
       "uniqueItems": true,
       "examples": [
         ["PDF"],
@@ -593,7 +590,6 @@
         },
         "required": ["rights"]
       },
-      "minItems": 1,
       "uniqueItems": true
     },
     "descriptions": {
@@ -640,7 +636,7 @@
             ]
           }
         },
-        "required": ["descriptionType", "description"]
+        "required": ["description"]
       },
       "minItems": 1,
       "uniqueItems": true
@@ -720,7 +716,6 @@
           "required": ["funderIdentifierType"]
         }
       },
-      "minItems": 1,
       "uniqueItems": true
     },
     "ethicsApprovals": {
@@ -883,20 +878,11 @@
     }
   },
   "required": [
-    "identifiers",
     "creators",
     "titles",
-    "publisher",
     "publicationYear",
     "subjects",
-    "dates",
-    "language",
-    "types",
-    "formats",
-    "rightsList",
-    "descriptions",
-    "fundingReferences",
-    "conference"
+    "descriptions"
   ],
   "definitions": {
     "resourceType": {
