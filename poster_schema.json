@@ -6,25 +6,6 @@
   "type": "object",
   "additionalProperties": true,
   "properties": {
-    "doi": {
-      "$comment": "Optional. If provided, the system should auto-extract prefix/suffix and populate the identifiers array. The system generates its own postersscienceIdentifier, so external DOI is not required at submission time.",
-      "type": "string",
-      "description": "The Digital Object Identifier of the item.",
-      "minLength": 1,
-      "examples": ["10.5072/envision.54", "10.5281/zenodo.12345678"]
-    },
-    "prefix": {
-      "type": "string",
-      "minLength": 1,
-      "description": "The prefix of the Digital Object Identifier of the item.",
-      "examples": ["10.5072", "10.5281"]
-    },
-    "suffix": {
-      "type": "string",
-      "minLength": 1,
-      "description": "The suffix of the Digital Object Identifier of the item.",
-      "examples": ["envision.54", "zenodo.12345678"]
-    },
     "identifiers": {
       "type": "array",
       "description": "Identifiers for the poster. May include DOI, institutional IDs, or other persistent identifiers.",
@@ -47,32 +28,6 @@
         "required": ["identifier", "identifierType"],
         "additionalProperties": false
       },
-      "uniqueItems": true
-    },
-    "alternateIdentifiers": {
-      "type": "array",
-      "description": "The alternate identifiers of the item.",
-      "items": {
-        "type": "object",
-        "properties": {
-          "alternateIdentifier": {
-            "type": "string",
-            "description": "The alternate identifier of the item.",
-            "minLength": 1,
-            "examples": ["PS-2025-001234"]
-          },
-          "alternateIdentifierType": {
-            "type": "string",
-            "$comment": "Any text value is allowed.",
-            "description": "The type of alternate identifier of the item.",
-            "minLength": 1,
-            "examples": ["psID"]
-          }
-        },
-        "required": ["alternateIdentifier", "alternateIdentifierType"],
-        "additionalProperties": false
-      },
-      "minItems": 0,
       "uniqueItems": true
     },
     "creators": {
@@ -244,8 +199,9 @@
       "uniqueItems": true
     },
     "publisher": {
+      "$comment": "Optional. Leave blank unless the poster has been formally published elsewhere with a DOI. Do not auto-populate with the hosting platform name.",
       "type": "object",
-      "description": "The entity that hosts, archives, or distributes the poster. This could be a repository (e.g., Zenodo, institutional repository), conference website, or publishing platform where the poster is or will be publicly available.",
+      "description": "The entity that formally publishes the poster with a DOI. Only use when the poster has been published through a repository (e.g., Zenodo) or publisher that assigns a DOI. Leave empty for posters hosted without formal DOI registration.",
       "properties": {
         "name": {
           "type": "string",
@@ -882,7 +838,8 @@
     "titles",
     "publicationYear",
     "subjects",
-    "descriptions"
+    "descriptions",
+    "conference"
   ],
   "definitions": {
     "resourceType": {
