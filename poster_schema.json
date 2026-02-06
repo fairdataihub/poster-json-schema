@@ -485,11 +485,12 @@
     },
     "formats": {
       "type": "array",
-      "description": "Technical format of the data files in the dataset. Use file extension or MIME type where possible, e.g., PDF, XML, MPG or application/pdf, text/xml, video/mpeg.",
+      "description": "Technical format of the poster file. Use file extension or MIME type where possible. This field is auto-detected from the uploaded file.",
       "items": {
         "type": "string",
         "minLength": 1
       },
+      "minItems": 1,
       "uniqueItems": true,
       "examples": [
         ["PDF"],
@@ -508,7 +509,7 @@
     },
     "rightsList": {
       "type": "array",
-      "description": "Any rights information for this resource. The property may be repeated to record complex rights characteristics.",
+      "description": "Rights and license information for this resource. Required for FAIR compliance and enabling reuse based on metadata.",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -516,7 +517,7 @@
           "rights": {
             "type": "string",
             "minLength": 1,
-            "description": "Use the complete title of a license and include version information if applicable",
+            "description": "Use the complete title of a license and include version information if applicable.",
             "examples": ["Creative Commons Attribution 4.0 International", "CC-BY-4.0"]
           },
           "rightsUri": {
@@ -546,6 +547,7 @@
         },
         "required": ["rights"]
       },
+      "minItems": 1,
       "uniqueItems": true
     },
     "descriptions": {
@@ -782,23 +784,49 @@
     },
     "tableCaptions": {
       "type": "array",
-      "description": "Array of table captions extracted from the poster. Each string is the full caption text for one table.",
+      "description": "Array of table caption objects. Each object represents one table with its caption and optional identifier for cross-referencing.",
       "items": {
-        "type": "string",
-        "minLength": 1,
-        "description": "Caption text for a single table, including label and description.",
-        "examples": ["Table 1. Summary of Results", "Table 2. Comparison of model performance across datasets"]
+        "type": "object",
+        "description": "Caption information for a single table.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Optional identifier for cross-referencing this table (e.g., 'table1', 'tbl-results'). Useful when table data and captions are extracted separately.",
+            "examples": ["table1", "tbl-results", "T1"]
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The full caption text for this table.",
+            "examples": ["Table 1. Summary of Results", "Table 2. Comparison of model performance across datasets"]
+          }
+        },
+        "required": ["caption"],
+        "additionalProperties": false
       },
       "uniqueItems": true
     },
     "imageCaptions": {
       "type": "array",
-      "description": "Array of image/figure captions extracted from the poster. Each string is the full caption text for one figure.",
+      "description": "Array of image/figure caption objects. Each object represents one figure with its caption and optional identifier for cross-referencing.",
       "items": {
-        "type": "string",
-        "minLength": 1,
-        "description": "Caption text for a single image/figure, including label and description.",
-        "examples": ["Figure 1. Overview of the Task Force", "Figure 2. Distribution of participants by region"]
+        "type": "object",
+        "description": "Caption information for a single image/figure.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Optional identifier for cross-referencing this figure (e.g., 'fig1', 'figure-workflow'). Useful when images and captions are extracted separately.",
+            "examples": ["fig1", "figure-workflow", "F1"]
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The full caption text for this image/figure.",
+            "examples": ["Figure 1. Overview of the Task Force", "Figure 2. Distribution of participants by region"]
+          }
+        },
+        "required": ["caption"],
+        "additionalProperties": false
       },
       "uniqueItems": true
     },
@@ -815,7 +843,9 @@
     "publicationYear",
     "subjects",
     "descriptions",
-    "conference"
+    "conference",
+    "rightsList",
+    "formats"
   ],
   "definitions": {
     "resourceType": {
