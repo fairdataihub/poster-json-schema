@@ -28,6 +28,7 @@
         "required": ["identifier", "identifierType"],
         "additionalProperties": false
       },
+      "minItems": 1,
       "uniqueItems": true
     },
     "creators": {
@@ -485,7 +486,7 @@
     },
     "formats": {
       "type": "array",
-      "description": "Technical format of the poster file. Use file extension or MIME type where possible. This field is auto-detected from the uploaded file.",
+      "description": "Technical format of the poster file. Use file extension or MIME type where possible, e.g., PDF, PNG, JPEG or application/pdf, image/png, image/jpeg.",
       "items": {
         "type": "string",
         "minLength": 1
@@ -594,7 +595,7 @@
             ]
           }
         },
-        "required": ["description"]
+        "required": ["descriptionType", "description"]
       },
       "minItems": 1,
       "uniqueItems": true
