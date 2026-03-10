@@ -894,9 +894,7 @@
     "types",
     "formats",
     "rightsList",
-    "descriptions",
-    "fundingReferences",
-    "conference"
+    "descriptions"
   ],
   "definitions": {
     "resourceType": {
