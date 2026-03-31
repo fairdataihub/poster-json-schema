@@ -7,13 +7,22 @@ Scientific posters are a primary means of scholarly communication at conferences
 - **FAIR compliance** when sharing posters 
 - **AI-ready**, structured representation for automated processing
 
-👉 **Full JSON schema**: [poster_schema.json](poster_schema.json)
+👉 **Latest schema (v0.2)**: [poster_schema.json](poster_schema.json) | **Versioned**: [schemas/](schemas/)
 
 This schema is developed as part of our development of [posters.science](https://posters.science), where we are also building a tool that takes the PDF file of a poster and automatically creates a JSON version compatible with this schema. Our vision is that anytime a poster is shared (as PDF or other similar format), it will be accompanied by a poster.json file that complies with this JSON schema to enable greater findability and reusability. We hope that this schema and its associated tools can be useful to anyone wanting to represent scientific posters in a machine-actionable format.
 
+## Schema Versions
+
+| Version | DataCite | Schema URL | Status |
+|---------|----------|-----------|--------|
+| [v0.2](schemas/v0.2/poster_schema.json) | 4.7 | `https://posters.science/schema/v0.2/poster_schema.json` | **Current** |
+| [v0.1](schemas/v0.1/poster_schema.json) | 4.6 | `https://posters.science/schema/v0.1/poster_schema.json` | Frozen |
+
+See [CHANGELOG.md](CHANGELOG.md) for details on what changed between versions.
+
 ## Development Approach
 
-The schema is based on the [DataCite Metadata Schema 4.6](https://datacite.org/), with poster-specific adjustments, including extensions for conference-related information.
+The schema is based on the [DataCite Metadata Schema](https://datacite.org/) (currently v4.7), with poster-specific adjustments, including extensions for conference-related information.
 
 ### DataCite Core Properties
 
@@ -38,11 +47,10 @@ The schema is based on the [DataCite Metadata Schema 4.6](https://datacite.org/)
 | Property | Description |
 |----------|-------------|
 | `conference` | Conference name, location, dates, URI, acronym |
-| `posterContent` | Structured sections extracted from poster |
-| `imageCaptions` | Captions for figures in the poster (array of caption parts per image) |
-| `tableCaptions` | Captions for tables in the poster (array of caption parts per table) |
-| `domain` | Research domain or field of study |
-| `species` | Species information if applicable |
+| `content` | Structured sections extracted from poster |
+| `imageCaptions` | Captions for figures in the poster |
+| `tableCaptions` | Captions for tables in the poster |
+| `researchField` | Primary research field or discipline |
 
 
 ## Example
@@ -50,7 +58,7 @@ We provide an example in the [example](example) folder using the poster availabl
 
 
 ## Related Standards
-- **DataCite Metadata Schema 4.6**: [schema.datacite.org](https://schema.datacite.org)
+- **DataCite Metadata Schema 4.7**: [schema.datacite.org](https://schema.datacite.org)
 - **ORCID**: [orcid.org](https://orcid.org) - Author identifiers
 - **ROR**: [ror.org](https://ror.org) - Organization identifiers
 - **Crossref Funder Registry**: Funding organization identifiers
