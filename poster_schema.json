@@ -837,8 +837,8 @@
     "researchField": {
       "type": "string",
       "minLength": 1,
-      "description": "Primary research field or discipline area for the research presented. Renamed from 'domain' to avoid confusion with biological taxonomy (where domain is the highest rank above kingdom/species).",
-      "examples": ["Machine Learning", "Clinical Medicine", "Bioinformatics", "Public Health", "Neuroscience"]
+      "description": "Top-level research domain for the poster. Use one of the four OpenAlex domains: 'Health Sciences', 'Life Sciences', 'Physical Sciences', 'Social Sciences'. Omit the field (or set to null) if the domain cannot be determined from poster content; never use 'Other', 'Unknown', or placeholder text. Renamed from 'domain' to avoid confusion with biological taxonomy.",
+      "examples": ["Health Sciences", "Life Sciences", "Physical Sciences", "Social Sciences"]
     }
   },
   "required": [
