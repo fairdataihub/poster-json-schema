@@ -5,7 +5,9 @@ All notable changes to the Posters.science JSON Schema are documented here.
 ## [Unreleased]
 
 ### Changed
-- `researchField` examples updated to the four OpenAlex top-level domains: `Health Sciences`, `Life Sciences`, `Physical Sciences`, `Social Sciences`. Description tightened to instruct extractors to omit the field when the domain cannot be determined and never to emit `"Other"`, `"Unknown"`, or placeholder text. No structural change — `type` remains `string`, no enum added (existing data with arbitrary discipline strings stays valid).
+- `descriptionType` and `dateType` moved from inline `oneOf` blocks to `$ref` definitions, matching the existing pattern for `relationType`, `identifierType`, and `resourceType`. No validation change, just consistency.
+- `descriptions` array description updated to clarify intended usage: `"Abstract"` for user-provided formal abstracts, `"Other"` for auto-generated summaries. A poster may have both.
+- `researchField` examples updated to the four OpenAlex top-level domains: `Health Sciences`, `Life Sciences`, `Physical Sciences`, `Social Sciences`. Description tightened to instruct extractors to omit the field when the domain cannot be determined and never to emit `"Other"`, `"Unknown"`, or placeholder text. No structural change -- `type` remains `string`, no enum added (existing data with arbitrary discipline strings stays valid).
 
 ## [v0.2] - 2026-03-31
 
