@@ -57,6 +57,14 @@ The schema is based on the [DataCite Metadata Schema](https://datacite.org/) (cu
 We provide an example in the [example](example) folder using the poster available at https://zenodo.org/records/17268692.
 
 
+## Crosswalks
+
+Field-by-field mappings between this schema and external metadata systems:
+
+| Target | Crosswalk | Notes |
+|--------|-----------|-------|
+| [Zenodo REST API](https://developers.zenodo.org/) | [crosswalk/zenodo.md](crosswalk/zenodo.md) | Deposit metadata mapping with transform notes |
+
 ## Related Standards
 - **DataCite Metadata Schema 4.7**: [schema.datacite.org](https://schema.datacite.org)
 - **ORCID**: [orcid.org](https://orcid.org) - Author identifiers
