@@ -553,6 +553,12 @@
             "description": "The URI of the funder identifier scheme",
             "examples": ["https://ror.org", "https://www.crossref.org/services/funder-registry/"]
           },
+          "awardTitle": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The human readable title or name of the award (grant)",
+            "examples": ["The awesome project of XYZ", "Socioenvironmental Monitoring of the Amazon Basin and Xingu"]
+          },
           "awardNumber": {
             "type": "string",
             "minLength": 1,
@@ -568,12 +574,6 @@
               "https://www.moore.org/grants/list/GBMF3859.01",
               "https://doi.org/10.35802/221400"
             ]
-          },
-          "awardTitle": {
-            "type": "string",
-            "minLength": 1,
-            "description": "The human readable title or name of the award (grant)",
-            "examples": ["The awesome project of XYZ", "Socioenvironmental Monitoring of the Amazon Basin and Xingu"]
           }
         },
         "required": ["funderName"],
