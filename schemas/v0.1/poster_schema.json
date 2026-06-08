@@ -200,8 +200,11 @@
       "uniqueItems": true
     },
     "publisher": {
-      "type": "object",
-      "description": "The entity that hosts, archives, publishes, prints, distributes, releases, issues, or produces the resource. This property will be used to formulate the citation, so consider the prominence of the role.",
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "The entity that hosts, archives, publishes, prints, distributes, releases, issues, or produces the resource. This property will be used to formulate the citation, so consider the prominence of the role. May be null as a placeholder when it is filled downstream by the hosting platform.",
       "properties": {
         "name": {
           "type": "string",
