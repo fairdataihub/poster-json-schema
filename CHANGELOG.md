@@ -25,8 +25,8 @@ Updated to align with [DataCite Metadata Schema 4.7](https://datacite-metadata-s
 - `$id` updated from `v0.1` to `v0.2`
 
 ### Directory Structure
-- Introduced `schemas/v0.1/` and `schemas/v0.2/` versioned directories
-- Root `poster_schema.json` always points to the latest version
+- Introduced `schemas/v0.1/` to freeze the prior v0.1 release
+- Root `poster_schema.json` holds the current version (v0.2); a version is archived under `schemas/` only once a newer version supersedes it
 
 ## [v0.1] - 2025-08-18
 

@@ -15,7 +15,7 @@ This schema is developed as part of our development of [posters.science](https:/
 
 | Version | DataCite | Schema URL | Status |
 |---------|----------|-----------|--------|
-| [v0.2](schemas/v0.2/poster_schema.json) | 4.7 | `https://posters.science/schema/v0.2/poster_schema.json` | **Current** |
+| [v0.2](poster_schema.json) | 4.7 | `https://posters.science/schema/v0.2/poster_schema.json` | **Current** |
 | [v0.1](schemas/v0.1/poster_schema.json) | 4.6 | `https://posters.science/schema/v0.1/poster_schema.json` | Frozen |
 
 See [CHANGELOG.md](CHANGELOG.md) for details on what changed between versions.
