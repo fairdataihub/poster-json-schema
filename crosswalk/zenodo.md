@@ -4,6 +4,8 @@ Mapping between [poster_schema.json v0.2](../poster_schema.json) (DataCite 4.7) 
 
 Use this document as the reference when building or updating the Zenodo payload in `posters-science/server/utils/zenodo.ts` (`buildFullRdmPayload()`) and `server/utils/zenodoVocabulary.ts`.
 
+The sister document for Figshare is the [draft Figshare crosswalk](figshare.md).
+
 Last checked against posters-science `main` (872f8d0, 2026-10-25) and the production records [21829859](https://zenodo.org/records/21829859) and [22135150](https://zenodo.org/records/22135150) on 2026-10-27.
 
 ## Data flow
