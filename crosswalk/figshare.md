@@ -1,6 +1,6 @@
 # poster_schema.json to Figshare Crosswalk (draft)
 
-> **Draft.** Posters.science cannot publish to Figshare yet. This is the proposed mapping for building that path. Nothing here is implemented. Rows marked **Proposed** are design choices to confirm, **Gap** means Figshare has no place for the field, and **Verify** needs a test deposit.
+> **Draft.** Posters.science cannot publish to Figshare yet. This is the proposed mapping for building that path. Nothing here is implemented. Rows marked **Agreed** were settled in the team meeting on 2026-10-23, **Proposed** are design choices to confirm, **Gap** means Figshare has no place for the field, and **Verify** needs a test deposit.
 
 Mapping between [poster_schema.json v0.2](../poster_schema.json) (DataCite 4.7) and the item (article) metadata of the [Figshare API v2](https://docs.figshare.com/). Sister document to the [Zenodo crosswalk](zenodo.md).
 
@@ -49,7 +49,7 @@ Figshare does not publish an item without a title, authors, item type, categorie
 | (hardcoded) | | `defined_type` | Always `"poster"` (item type 5) | Proposed |
 | `subjects[].subject` | `PosterMetadata.subjects` | `keywords[]` | Free text, empty strings dropped. At least one is required. | Proposed |
 | `descriptions[]` | `Poster.description` and the submission abstract | `description` | See [Description](#description) | Proposed |
-| `rightsList[0].rightsIdentifier` | `PosterMetadata.license` | `license` (integer id) | Match by license URL against `GET /account/licenses`. figshare.com offers only CC BY 4.0, CC0, MIT, GPL, GPL 2.0+, GPL 3.0+ and Apache 2.0; institutions may offer more (the UL Research Institutes portal has CC BY-SA 4.0). | Proposed, Gap for other licenses |
+| `rightsList[0].rightsIdentifier` | `PosterMetadata.license` | `license` (integer id) | The license is chosen at the deposit step (step 3). When Figshare is the target, the dropdown lists only the licenses the user's Figshare account offers (`GET /account/licenses`), and the choice is sent by its id. figshare.com offers CC BY 4.0, CC0, MIT, GPL, GPL 2.0+, GPL 3.0+ and Apache 2.0, so CC BY 4.0 or CC0 for a poster; institutions may offer more (the UL Research Institutes portal has CC BY-SA 4.0). | Agreed |
 | (none) | | `categories_by_source_id[]` | At least one category is required: an ANZSRC Fields of Research 2020 code on figshare.com, or a code from the institution's own taxonomy. The stored `researchField` (an OpenAlex domain) is too broad to map. | Open question |
 
 ### Authors
@@ -67,13 +67,16 @@ An author `id` (an existing Figshare account) overrides every other author field
 
 ### Description
 
-Figshare has one description field, which accepts HTML. DataCite receives it as plain text of type Abstract, with the HTML stripped, so paragraph breaks are lost ("Switzerland.We used ..." on 33990901).
+Figshare has one description field, which accepts HTML (not Markdown). DataCite receives it as plain text of type Abstract, with the HTML stripped, so paragraph breaks are lost ("Switzerland.We used ..." on 33990901).
+
+Agreed on 2026-10-23: metadata Figshare has no field for goes into the description as a clean, readable block, so it is still shown on the item and found by Figshare's search. The conference is the first such block.
 
 | poster_schema.json | DB source | Figshare field | Transform | Status |
 |---|---|---|---|---|
-| (conference) | `PosterMetadata.conference*` | `description`, first line | "Presented at {name} ({acronym}), {location}, {dates}." See [Conference](#conference). | Proposed |
 | `descriptions[0].description` | `Poster.description` | `description` | First paragraph | Proposed |
-| `descriptions[]` where descriptionType=Abstract | `PosterMetadata.posterContent.submissionAbstract` | `description` | Appended under an "Abstract" heading | Proposed |
+| `descriptions[]` where descriptionType=Abstract | `PosterMetadata.posterContent.submissionAbstract` | `description` | Under an "Abstract" heading | Proposed |
+| (conference) | `PosterMetadata.conference*` | `description` | Under a "Conference" heading. See [Conference](#conference). | Agreed |
+| (other fields Figshare cannot hold) | | `description` | Which ones join the conference (affiliations, funder ids, language) | Open question |
 | `content.sections[]` | `PosterMetadata.posterContent` (JSONB) | `description` | Could be appended, as proposed for Zenodo | Open question |
 
 ### Keywords and Subjects
@@ -94,7 +97,7 @@ Figshare has one description field, which accepts HTML. DataCite receives it as 
 | poster_schema.json | DB source | Figshare field | Transform | Status |
 |---|---|---|---|---|
 | (publish date) | | | Figshare records the posted date itself; DataCite gets Created, Updated and Issued | Automatic |
-| `dates[]` where dateType=Presented | `PosterMetadata.dates` | `description` | In the "Presented at" line. Figshare has no presentation date. | Proposed |
+| `dates[]` where dateType=Presented | `PosterMetadata.dates` | `description` | In the Conference block, with the conference dates. Figshare has no presentation date. | Proposed |
 | `dates[]` (other types) | `PosterMetadata.dates` | | The `timeline` dates (first online, publisher publication, publisher acceptance) describe journal publication, not posters. Not sent. | N/A |
 
 ### Related Identifiers
@@ -126,12 +129,12 @@ Some institutional portals mint Handles instead of DOIs. Store those with identi
 
 ### Conference
 
-figshare.com has no conference fields. Institutions can define custom fields, but those differ per portal.
+figshare.com has no conference fields. Institutions can define custom fields, but those differ per portal. Agreed on 2026-10-23: the conference goes in the description under its own heading, so Figshare's search finds posters by conference.
 
 | poster_schema.json | DB source | Figshare field | Transform | Status |
 |---|---|---|---|---|
-| `conference.conferenceName`, `conferenceAcronym`, `conferenceLocation`, `conferenceStartDate`, `conferenceEndDate` | `PosterMetadata.conference*` | `description`, first line | "Presented at Bioinformatics Open Source Conference (BOSC), Washington, DC, USA, 2026-07-14 - 2026-07-16." | Proposed |
-| `conference.conferenceUri` | `PosterMetadata.conferenceUri` | `related_materials[]` (identifier_type `URL`, title = conference name) | DataCite has no relation type for "presented at". Choose one (`IsPartOf` or `References`). | Open question |
+| `conference.conferenceName`, `conferenceAcronym`, `conferenceLocation`, `conferenceStartDate`, `conferenceEndDate`, `conferenceUri` | `PosterMetadata.conference*` | `description`, "Conference" block | A heading, then one line each: "Bioinformatics Open Source Conference (BOSC)", "Washington, DC, USA", "2026-07-14 - 2026-07-16", and the conference URL as a link | Agreed |
+| `conference.conferenceUri` | `PosterMetadata.conferenceUri` | `related_materials[]` (identifier_type `URL`, title = conference name) | Optional, in addition to the block. DataCite has no relation type for "presented at". Choose one (`IsPartOf` or `References`). | Open question |
 | `conference.conferenceIdentifier`, `conferenceSeries` | | | No field | N/A |
 
 ### Funding
@@ -183,9 +186,10 @@ Since July 2026 we have indexed Figshare posters into the registry (the "Figshar
 ## Open questions
 
 1. **Categories:** let users pick ANZSRC categories when publishing, or map them from a finer research field than the OpenAlex domain?
-2. **Licenses:** what to do with a poster under a license figshare.com does not offer (CC BY-NC, CC BY-SA, CC BY-ND): block it, or ask the user to choose an offered license?
-3. **Affiliations:** also list them in the description, or keep them in poster.json only?
-4. **Conference URL:** which relation type to use.
-5. **Connection:** Figshare OAuth application or personal token (Zenodo now supports both).
-6. **Institutional accounts:** support portals (their licenses, categories, custom fields and curation review) from the start, or figshare.com only?
-7. **Test deposit** to check: the form `reserve_doi` returns, the fields required to publish, and whether related materials and linked grants reach DataCite.
+2. **Description block:** besides the conference, which fields Figshare cannot hold go into the description (affiliations, funder ids, language), and in what layout?
+3. **Conference URL:** also send it as a related material, and with which relation type?
+4. **Connection:** Figshare OAuth application or personal token (Zenodo now supports both).
+5. **Institutional accounts:** support portals (their licenses, categories, custom fields and curation review) from the start, or figshare.com only?
+6. **Test deposit** to check: the form `reserve_doi` returns, the fields required to publish, and whether related materials and linked grants reach DataCite.
+
+Settled on 2026-10-23: the license dropdown shows only the Figshare account's licenses, and the conference goes in the description.
