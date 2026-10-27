@@ -63,7 +63,7 @@ Field-by-field mappings between this schema and external metadata systems:
 
 | Target | Crosswalk | Notes |
 |--------|-----------|-------|
-| [Zenodo REST API](https://developers.zenodo.org/) | [crosswalk/zenodo.md](crosswalk/zenodo.md) | Deposit metadata mapping with transform notes |
+| [Zenodo (InvenioRDM API)](https://inveniordm.docs.cern.ch/reference/rest_api_drafts_records/) | [crosswalk/zenodo.md](crosswalk/zenodo.md) | Record metadata mapping with transform notes |
 
 ## Related Standards
 - **DataCite Metadata Schema 4.7**: [schema.datacite.org](https://schema.datacite.org)
