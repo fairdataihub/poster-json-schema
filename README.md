@@ -64,6 +64,7 @@ Field-by-field mappings between this schema and external metadata systems:
 | Target | Crosswalk | Notes |
 |--------|-----------|-------|
 | [Zenodo (InvenioRDM API)](https://inveniordm.docs.cern.ch/reference/rest_api_drafts_records/) | [crosswalk/zenodo.md](crosswalk/zenodo.md) | Record metadata mapping with transform notes |
+| [Figshare API v2](https://docs.figshare.com/) | [crosswalk/figshare.md](crosswalk/figshare.md) | Draft: proposed item metadata mapping (Figshare publishing is not built yet) |
 
 ## Related Standards
 - **DataCite Metadata Schema 4.7**: [schema.datacite.org](https://schema.datacite.org)
